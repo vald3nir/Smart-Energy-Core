@@ -1,5 +1,5 @@
-# Smart Energy Dashboard
-Dashboard to show in real-time the energy consumption residential
+# Smart Energy Datasets
+Repository to store all residential electrical energy consumption time series through a dashboard created through Node-red.
 
 ## Overview
 
