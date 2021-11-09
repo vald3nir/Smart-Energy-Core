@@ -4,17 +4,16 @@
 import pymongo
 
 # DB CONFIG
-_DATABASE = "smart_energy"
-DB_USER_NAME = "dev"
-DB_USER_PASSWORD = "1721"
-DB_HOST = "127.0.0.1"
-_CLIENT_URL = f"mongodb://{DB_USER_NAME}:{DB_USER_PASSWORD}@{DB_HOST}"
+_DB_USER_NAME = "dev"
+_DB_USER_PASSWORD = "1721"
+_DB_HOST = "127.0.0.1"
+_CLIENT_URL = f"mongodb://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
 
 
 class MongoDB:
-    def __init__(self, collection, ) -> None:
+    def __init__(self, database, collection) -> None:
         super().__init__()
-        self.collection = pymongo.MongoClient(_CLIENT_URL)[_DATABASE][collection]
+        self.collection = pymongo.MongoClient(_CLIENT_URL)[database][collection]
 
     def find_one(self, query):
         return self.collection.find_one(query)
