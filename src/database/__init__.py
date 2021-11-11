@@ -3,16 +3,18 @@
 
 import pymongo
 
-# DB CONFIG
-_DB_USER_NAME = "dev"
-_DB_USER_PASSWORD = "1721"
-_DB_HOST = "127.0.0.1"
-_CLIENT_URL = f"mongodb://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
 
-
-class MongoDB:
+class MongoDBRemote:
     def __init__(self, database, collection) -> None:
         super().__init__()
+
+        # DB CONFIG
+        _DB_USER_NAME = "dev"
+        _DB_USER_PASSWORD = "Em4SWKrUDatZ83b"
+        _DEFAULT_DATABASE = "EnergyConsumption"
+        _DB_HOST = f"smartenergycluster.jsanh.mongodb.net/{_DEFAULT_DATABASE}?retryWrites=true&w=majority"
+        _CLIENT_URL = f"mongodb+srv://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
+
         self.collection = pymongo.MongoClient(_CLIENT_URL)[database][collection]
 
     def find_one(self, query):
@@ -43,3 +45,17 @@ class MongoDB:
 
     def remove(self, query):
         self.collection.remove(query)
+
+
+class MongoDBLocal(MongoDBRemote):
+
+    def __init__(self, database, collection) -> None:
+        super().__init__(database, collection)
+
+        # DB CONFIG
+        _DB_USER_NAME = "dev"
+        _DB_USER_PASSWORD = "1721"
+        _DB_HOST = "127.0.0.1"
+        _CLIENT_URL = f"mongodb://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
+
+        self.collection = pymongo.MongoClient(_CLIENT_URL)[database][collection]
