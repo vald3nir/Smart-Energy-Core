@@ -1,13 +1,6 @@
+import json
 import os
 
-
-# def list_all_files(directory):
-#     _files = []
-#     for root, dirs, files in os.walk(directory):
-#         for file in files:
-#             _files.append(os.path.join(root, file))
-#             # _files.append(file)
-#     return _files
 
 def list_sub_folders(directory):
     return [d for d in os.listdir(directory) if os.path.isdir(os.path.join(directory, d))]
@@ -38,8 +31,27 @@ def create_folder_if_not_exist(directory):
         os.makedirs(directory)
 
 
-def list_files_with_prefix(folder, prefix):
-    files = [f for f in os.listdir(folder) if
-             str(f).__contains__(prefix) and check_if_file_exist(os.path.join(folder, f))
-             ]
-    return files
+def read_first_line(file):
+    f = open(file, "r")
+    line = f.readline()
+    f.close()
+    return line
+
+
+def read_all_lines(file):
+    f = open(file, "r")
+    lines = f.read()
+    f.close()
+    return lines
+
+
+def write_json(file, data):
+    with open(file, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+
+def write_array(file, lines):
+    f = open(file, "w")
+    for line in lines:
+        f.write(line)
+    f.close()

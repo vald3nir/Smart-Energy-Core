@@ -13,6 +13,11 @@ def _load_dataframe(file_csv):
     return pd.read_csv(file_csv, error_bad_lines=False)
 
 
+def sum_columns(file_csv, column):
+    df = _load_dataframe(file_csv)
+    return df[column].sum()
+
+
 def csv_to_json(file_csv):
     df = _load_dataframe(file_csv)
     frame = df.iloc[:]
