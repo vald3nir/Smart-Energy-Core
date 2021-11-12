@@ -1,511 +1,511 @@
 [
-  {
-    "id": "6b0c82e4.28f77c",
-    "type": "tab",
-    "label": "Smart-Energy",
-    "disabled": false,
-    "info": "",
-    "env": []
-  },
-  {
-    "id": "dc3b84e3.73c928",
-    "type": "ui_gauge",
-    "z": "6b0c82e4.28f77c",
-    "name": "Tempo Real",
-    "group": "2f12d5f7.07b6aa",
-    "order": 1,
-    "width": "4",
-    "height": "5",
-    "gtype": "donut",
-    "title": "Tempo Real",
-    "label": "w",
-    "format": "{{value}}",
-    "min": 0,
-    "max": "5000",
-    "colors": [
-      "#00b500",
-      "#e6e600",
-      "#ca3838"
-    ],
-    "seg1": "1000",
-    "seg2": "3000",
-    "className": "",
-    "x": 670,
-    "y": 220,
-    "wires": []
-  },
-  {
-    "id": "165b0f62.447621",
-    "type": "function",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "func": "msg.payload = msg.payload.power;\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 400,
-    "y": 240,
-    "wires": [
-      [
-        "dc3b84e3.73c928",
-        "b3053663.7e2048"
-      ]
-    ]
-  },
-  {
-    "id": "482a2dad.1dd7c4",
-    "type": "inject",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "props": [
-      {
-        "p": "payload"
-      },
-      {
-        "p": "topic",
-        "vt": "str"
-      }
-    ],
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "onceDelay": 0.1,
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "x": 180,
-    "y": 60,
-    "wires": [
-      [
-        "b337e58e.74acc8"
-      ]
-    ]
-  },
-  {
-    "id": "b337e58e.74acc8",
-    "type": "exec",
-    "z": "6b0c82e4.28f77c",
-    "command": "cd /home/pi/Documents/projects/Smart_Energy_Backend && python3 app.py&",
-    "addpay": false,
-    "append": "",
-    "useSpawn": "false",
-    "timer": "",
-    "oldrc": false,
-    "name": "Start Server",
-    "x": 330,
-    "y": 60,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "d6e4ee2.1ff271",
-    "type": "inject",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "props": [
-      {
-        "p": "payload"
-      },
-      {
-        "p": "topic",
-        "vt": "str"
-      }
-    ],
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "onceDelay": 0.1,
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "x": 720,
-    "y": 60,
-    "wires": [
-      [
-        "e58912c8.c2911"
-      ]
-    ]
-  },
-  {
-    "id": "e58912c8.c2911",
-    "type": "exec",
-    "z": "6b0c82e4.28f77c",
-    "command": "sudo reboot",
-    "addpay": false,
-    "append": "",
-    "useSpawn": "false",
-    "timer": "",
-    "oldrc": false,
-    "name": "",
-    "x": 870,
-    "y": 60,
-    "wires": [
-      [],
-      [],
-      []
-    ]
-  },
-  {
-    "id": "45ed0bad.c7f8c4",
-    "type": "file",
-    "z": "6b0c82e4.28f77c",
-    "name": "file",
-    "filename": "",
-    "appendNewline": true,
-    "createDir": true,
-    "overwriteFile": "false",
-    "encoding": "none",
-    "x": 550,
-    "y": 140,
-    "wires": [
-      [
-        "7117b2af.bff0ec"
-      ]
-    ]
-  },
-  {
-    "id": "f192c525.48c368",
-    "type": "function",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "func": "var date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/projects/Smart-Energy-Datasets/src/users/Valdenir/time_series/\" + year + \"/\" + month + \"/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.device_id + \",\" + msg.payload.power;\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 400,
-    "y": 140,
-    "wires": [
-      [
-        "45ed0bad.c7f8c4"
-      ]
-    ]
-  },
-  {
-    "id": "e12c6b0b.e368b8",
-    "type": "http in",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "url": "/time_series",
-    "method": "post",
-    "upload": true,
-    "swaggerDoc": "",
-    "x": 150,
-    "y": 180,
-    "wires": [
-      [
-        "165b0f62.447621",
-        "f192c525.48c368"
-      ]
-    ]
-  },
-  {
-    "id": "7117b2af.bff0ec",
-    "type": "http response",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "statusCode": "",
-    "headers": {},
-    "x": 690,
-    "y": 140,
-    "wires": []
-  },
-  {
-    "id": "b3053663.7e2048",
-    "type": "ui_chart",
-    "z": "6b0c82e4.28f77c",
-    "name": "Histórico",
-    "group": "2f12d5f7.07b6aa",
-    "order": 2,
-    "width": "20",
-    "height": "5",
-    "label": "Histórico de Consumo [W]",
-    "chartType": "line",
-    "legend": "false",
-    "xformat": "HH:mm:ss",
-    "interpolate": "linear",
-    "nodata": "",
-    "dot": false,
-    "ymin": "",
-    "ymax": "500",
-    "removeOlder": 1,
-    "removeOlderPoints": "1000",
-    "removeOlderUnit": "604800",
-    "cutout": 0,
-    "useOneColor": false,
-    "useUTC": false,
-    "colors": [
-      "#1f77b4",
-      "#aec7e8",
-      "#ff7f0e",
-      "#2ca02c",
-      "#98df8a",
-      "#d62728",
-      "#ff9896",
-      "#9467bd",
-      "#c5b0d5"
-    ],
-    "outputs": 1,
-    "useDifferentColor": false,
-    "className": "",
-    "x": 680,
-    "y": 280,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "8ce397922931b4ee",
-    "type": "ui_chart",
-    "z": "6b0c82e4.28f77c",
-    "name": "Consumo Mensal",
-    "group": "2f12d5f7.07b6aa",
-    "order": 5,
-    "width": "24",
-    "height": "5",
-    "label": "Consumo Mensal [KW/h]",
-    "chartType": "bar",
-    "legend": "false",
-    "xformat": "D/M",
-    "interpolate": "linear",
-    "nodata": "",
-    "dot": false,
-    "ymin": "",
-    "ymax": "",
-    "removeOlder": "999",
-    "removeOlderPoints": "",
-    "removeOlderUnit": "604800",
-    "cutout": 0,
-    "useOneColor": false,
-    "useUTC": false,
-    "colors": [
-      "#1f77b4",
-      "#aec7e8",
-      "#ff7f0e",
-      "#2ca02c",
-      "#98df8a",
-      "#d62728",
-      "#ff9896",
-      "#9467bd",
-      "#c5b0d5"
-    ],
-    "outputs": 1,
-    "useDifferentColor": false,
-    "className": "",
-    "x": 830,
-    "y": 440,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "0e00d945de216f01",
-    "type": "function",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "func": "var unix_timestamp = msg.payload;\n\nvar currentDate = new Date(unix_timestamp);\nvar month = ('0' + (currentDate.getMonth() + 1)).slice(-2)\n\nmsg.collection = \"Valdenir_Consumption\"\nmsg.payload = {\n    \"date\": {\n        '$regex': '.*-' + month + '-.*'\n    }\n}\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 340,
-    "y": 380,
-    "wires": [
-      [
-        "2aad34f72a3132ac"
-      ]
-    ]
-  },
-  {
-    "id": "8ed5d0e09407ad89",
-    "type": "ui_date_picker",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "label": "Seleção de Data",
-    "group": "2f12d5f7.07b6aa",
-    "order": 3,
-    "width": "0",
-    "height": "0",
-    "passthru": true,
-    "topic": "topic",
-    "topicType": "msg",
-    "className": "",
-    "x": 150,
-    "y": 400,
-    "wires": [
-      [
-        "0e00d945de216f01",
-        "3ebebaccd96f7d10"
-      ]
-    ]
-  },
-  {
-    "id": "2aad34f72a3132ac",
-    "type": "mongodb in",
-    "z": "6b0c82e4.28f77c",
-    "mongodb": "31d096168132145b",
-    "name": "",
-    "collection": "",
-    "operation": "find",
-    "x": 500,
-    "y": 380,
-    "wires": [
-      [
-        "e653fa2ffdad1be5"
-      ]
-    ]
-  },
-  {
-    "id": "e653fa2ffdad1be5",
-    "type": "function",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "func": "var labels = []\nvar data = [[]]\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date)\n    data[0].push(item.consumption)\n});\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 660,
-    "y": 380,
-    "wires": [
-      [
-        "5ccc2951d5b6bcb4"
-      ]
-    ]
-  },
-  {
-    "id": "5ccc2951d5b6bcb4",
-    "type": "ui_chart",
-    "z": "6b0c82e4.28f77c",
-    "name": "Consumo Diário",
-    "group": "2f12d5f7.07b6aa",
-    "order": 4,
-    "width": "24",
-    "height": "5",
-    "label": "Consumo Diário [KW/h]",
-    "chartType": "bar",
-    "legend": "false",
-    "xformat": "D/M",
-    "interpolate": "linear",
-    "nodata": "",
-    "dot": false,
-    "ymin": "",
-    "ymax": "",
-    "removeOlder": "999",
-    "removeOlderPoints": "",
-    "removeOlderUnit": "604800",
-    "cutout": 0,
-    "useOneColor": false,
-    "useUTC": false,
-    "colors": [
-      "#1f77b4",
-      "#aec7e8",
-      "#ff7f0e",
-      "#2ca02c",
-      "#98df8a",
-      "#d62728",
-      "#ff9896",
-      "#9467bd",
-      "#c5b0d5"
-    ],
-    "outputs": 1,
-    "useDifferentColor": false,
-    "className": "",
-    "x": 820,
-    "y": 380,
-    "wires": [
-      []
-    ]
-  },
-  {
-    "id": "3ebebaccd96f7d10",
-    "type": "function",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "func": "var unix_timestamp = msg.payload;\n\nvar currentDate = new Date(unix_timestamp);\nvar month = ('0' + (currentDate.getMonth() + 1)).slice(-2)\n\nmsg.collection = \"Valdenir_Consumption\"\nmsg.payload = {\n    \"date\": {\n        '$regex': '.*-' + month + '-.*'\n    }\n}\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 340,
-    "y": 440,
-    "wires": [
-      [
-        "5ce154d819c04bc5"
-      ]
-    ]
-  },
-  {
-    "id": "5ce154d819c04bc5",
-    "type": "mongodb in",
-    "z": "6b0c82e4.28f77c",
-    "mongodb": "31d096168132145b",
-    "name": "",
-    "collection": "",
-    "operation": "find",
-    "x": 500,
-    "y": 440,
-    "wires": [
-      [
-        "5e678d46489d6cde"
-      ]
-    ]
-  },
-  {
-    "id": "5e678d46489d6cde",
-    "type": "function",
-    "z": "6b0c82e4.28f77c",
-    "name": "",
-    "func": "var labels = []\nvar data = [[]]\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date)\n    data[0].push(item.consumption)\n});\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 660,
-    "y": 440,
-    "wires": [
-      [
-        "8ce397922931b4ee"
-      ]
-    ]
-  },
-  {
-    "id": "2f12d5f7.07b6aa",
-    "type": "ui_group",
-    "name": "Dashboard",
-    "tab": "765531fd.bdff6",
-    "order": 1,
-    "disp": false,
-    "width": "24",
-    "collapse": false
-  },
-  {
-    "id": "31d096168132145b",
-    "type": "mongodb",
-    "hostname": "smartenergycluster.jsanh.mongodb.net",
-    "topology": "dnscluster",
-    "connectOptions": "retryWrites=true&w=majority",
-    "port": "27017",
-    "db": "smart_energy",
-    "name": "SmartEnergyDB"
-  },
-  {
-    "id": "765531fd.bdff6",
-    "type": "ui_tab",
-    "name": "Smart Energy",
-    "icon": "dashboard",
-    "order": 1,
-    "disabled": false,
-    "hidden": true
-  }
+    {
+        "id": "6b0c82e4.28f77c",
+        "type": "tab",
+        "label": "Smart-Energy",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dc3b84e3.73c928",
+        "type": "ui_gauge",
+        "z": "6b0c82e4.28f77c",
+        "name": "Tempo Real",
+        "group": "2f12d5f7.07b6aa",
+        "order": 1,
+        "width": "4",
+        "height": "5",
+        "gtype": "donut",
+        "title": "Tempo Real",
+        "label": "w",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "5000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "1000",
+        "seg2": "3000",
+        "className": "",
+        "x": 670,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "165b0f62.447621",
+        "type": "function",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "func": "msg.payload = msg.payload.power;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "dc3b84e3.73c928",
+                "b3053663.7e2048"
+            ]
+        ]
+    },
+    {
+        "id": "482a2dad.1dd7c4",
+        "type": "inject",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 60,
+        "wires": [
+            [
+                "b337e58e.74acc8"
+            ]
+        ]
+    },
+    {
+        "id": "b337e58e.74acc8",
+        "type": "exec",
+        "z": "6b0c82e4.28f77c",
+        "command": "cd /home/pi/Documents/projects/Smart_Energy_Backend && python3 app.py&",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Start Server",
+        "x": 330,
+        "y": 60,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d6e4ee2.1ff271",
+        "type": "inject",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 720,
+        "y": 60,
+        "wires": [
+            [
+                "e58912c8.c2911"
+            ]
+        ]
+    },
+    {
+        "id": "e58912c8.c2911",
+        "type": "exec",
+        "z": "6b0c82e4.28f77c",
+        "command": "sudo reboot",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 870,
+        "y": 60,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "45ed0bad.c7f8c4",
+        "type": "file",
+        "z": "6b0c82e4.28f77c",
+        "name": "file",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "7117b2af.bff0ec"
+            ]
+        ]
+    },
+    {
+        "id": "f192c525.48c368",
+        "type": "function",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "func": "var date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/projects/Smart-Energy-Datasets/src/users/Valdenir/time_series/\" + year + \"/\" + month + \"/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.device_id + \",\" + msg.payload.power;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 140,
+        "wires": [
+            [
+                "45ed0bad.c7f8c4"
+            ]
+        ]
+    },
+    {
+        "id": "e12c6b0b.e368b8",
+        "type": "http in",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "url": "/time_series",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "165b0f62.447621",
+                "f192c525.48c368"
+            ]
+        ]
+    },
+    {
+        "id": "7117b2af.bff0ec",
+        "type": "http response",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 690,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b3053663.7e2048",
+        "type": "ui_chart",
+        "z": "6b0c82e4.28f77c",
+        "name": "Histórico",
+        "group": "2f12d5f7.07b6aa",
+        "order": 2,
+        "width": "20",
+        "height": "5",
+        "label": "Histórico de Consumo [W]",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "500",
+        "removeOlder": 1,
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "604800",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 680,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8ce397922931b4ee",
+        "type": "ui_chart",
+        "z": "6b0c82e4.28f77c",
+        "name": "Consumo Mensal",
+        "group": "2f12d5f7.07b6aa",
+        "order": 5,
+        "width": "24",
+        "height": "5",
+        "label": "Consumo Mensal [KW/h]",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "D/M",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "999",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "604800",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 830,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0e00d945de216f01",
+        "type": "function",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "func": "var unix_timestamp = msg.payload;\n\nvar currentDate = new Date(unix_timestamp);\nvar month = ('0' + (currentDate.getMonth() + 1)).slice(-2)\n\nmsg.collection = \"Valdenir_Consumption\"\nmsg.payload = {\n    \"date\": {\n        '$regex': '.*-' + month + '-.*'\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 380,
+        "wires": [
+            [
+                "2aad34f72a3132ac"
+            ]
+        ]
+    },
+    {
+        "id": "8ed5d0e09407ad89",
+        "type": "ui_date_picker",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "label": "Seleção de Data",
+        "group": "2f12d5f7.07b6aa",
+        "order": 3,
+        "width": "0",
+        "height": "0",
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 150,
+        "y": 400,
+        "wires": [
+            [
+                "0e00d945de216f01",
+                "d4a1ee76c3da0fe3"
+            ]
+        ]
+    },
+    {
+        "id": "2aad34f72a3132ac",
+        "type": "mongodb in",
+        "z": "6b0c82e4.28f77c",
+        "mongodb": "31d096168132145b",
+        "name": "",
+        "collection": "",
+        "operation": "find",
+        "x": 500,
+        "y": 380,
+        "wires": [
+            [
+                "e653fa2ffdad1be5"
+            ]
+        ]
+    },
+    {
+        "id": "e653fa2ffdad1be5",
+        "type": "function",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "func": "var labels = []\nvar data = [[]]\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date)\n    data[0].push(item.consumption)\n});\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 380,
+        "wires": [
+            [
+                "5ccc2951d5b6bcb4"
+            ]
+        ]
+    },
+    {
+        "id": "5ccc2951d5b6bcb4",
+        "type": "ui_chart",
+        "z": "6b0c82e4.28f77c",
+        "name": "Consumo Diário",
+        "group": "2f12d5f7.07b6aa",
+        "order": 4,
+        "width": "24",
+        "height": "5",
+        "label": "Consumo Diário [KW/h]",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "D/M",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "999",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "604800",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 820,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5e678d46489d6cde",
+        "type": "function",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "func": "var labels = []\nvar data = [[]]\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(0, 7))\n    data[0].push(item.consumption)\n});\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 440,
+        "wires": [
+            [
+                "8ce397922931b4ee"
+            ]
+        ]
+    },
+    {
+        "id": "d882a13e74a47f71",
+        "type": "mongodb in",
+        "z": "6b0c82e4.28f77c",
+        "mongodb": "31d096168132145b",
+        "name": "",
+        "collection": "",
+        "operation": "aggregate",
+        "x": 500,
+        "y": 440,
+        "wires": [
+            [
+                "5e678d46489d6cde"
+            ]
+        ]
+    },
+    {
+        "id": "d4a1ee76c3da0fe3",
+        "type": "function",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "func": "var unix_timestamp = msg.payload;\n\nvar currentDate = new Date(unix_timestamp);\nvar month = ('0' + (currentDate.getMonth() + 1)).slice(-2)\n\nmsg.collection = \"Valdenir_Consumption\"\nmsg.payload = [{\n    \"$group\": {\n        \"_id\": {\n            \"$substr\": [\"$date\", 0, 7]\n        },\n        \"date\": {\n            \"$first\": \"$date\"\n        },\n        \"consumption\": {\n            \"$sum\": \"$consumption\"\n        },\n    }\n}, {\n    \"$sort\": {\n        \"date\": -1\n    }\n}]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 440,
+        "wires": [
+            [
+                "d882a13e74a47f71"
+            ]
+        ]
+    },
+    {
+        "id": "2f12d5f7.07b6aa",
+        "type": "ui_group",
+        "name": "Dashboard",
+        "tab": "765531fd.bdff6",
+        "order": 1,
+        "disp": false,
+        "width": "24",
+        "collapse": false
+    },
+    {
+        "id": "31d096168132145b",
+        "type": "mongodb",
+        "hostname": "smartenergycluster.jsanh.mongodb.net",
+        "topology": "dnscluster",
+        "connectOptions": "retryWrites=true&w=majority",
+        "port": "27017",
+        "db": "smart_energy",
+        "name": "SmartEnergyDB"
+    },
+    {
+        "id": "765531fd.bdff6",
+        "type": "ui_tab",
+        "name": "Smart Energy",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": true
+    }
 ]
