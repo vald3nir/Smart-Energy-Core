@@ -33,7 +33,7 @@ def _fill_energy_consumption(_user_name):
     for key in consumption_summary:
         folder = f"{consumption_directory}/{key[:4]}"
         utils_io.create_folder_if_not_exist(folder)
-        utils_io.write_json(f"{folder}/{key}.json", consumption_summary[key])
+        utils_io.write_json(f"{folder}/{key[5:]}.json", consumption_summary[key])
 
     if len(consumption_array) > 0:
         db = MongoDBRemote(database=DATABASE_NAME, collection=f"{_user_name}_Consumption")
