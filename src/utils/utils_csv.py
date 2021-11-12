@@ -13,6 +13,11 @@ def _load_dataframe(file_csv):
     return pd.read_csv(file_csv, error_bad_lines=False)
 
 
+def list_column_values(file_csv, column):
+    df = _load_dataframe(file_csv)
+    return df[column].tolist()
+
+
 def sum_columns(file_csv, column):
     df = _load_dataframe(file_csv)
     return df[column].sum()
