@@ -3,35 +3,46 @@ import math
 import src.utils.utils_csv as utils_csv
 import src.utils.utils_io as utils_io
 from src.database import MongoDBLocal, MongoDBRemote
-from src.tasks import USERS_FOLDER
+from src.tasks import *
 
-DATABASE_NAME = 'smart_energy'
 WATTS_SECONDS_TO_KILOWATT_HOURS = 2.778 * math.pow(10, -7)
 
 
 def _fill_energy_consumption(_user_name):
     time_series_directory = f"{USERS_FOLDER}{_user_name}/time_series"
-    consumption_json_file = f"{USERS_FOLDER}{_user_name}/consumption.json"
+    consumption_directory = f"{USERS_FOLDER}{_user_name}/consumption_summary"
 
+    consumption_summary = {}
     consumption_array = []
+
     for doc in utils_io.list_all_files(time_series_directory):
+        date = doc.replace(time_series_directory, "")[9:-4]
+        file_name = f"{date[:4]}-{date[5:7]}"
+
         consumption = {
-            "date": doc.replace(time_series_directory, "")[9:-4],
+            "date": date,
             "consumption": WATTS_SECONDS_TO_KILOWATT_HOURS * utils_csv.sum_columns(doc, "power")
         }
-        print(consumption)
+
         consumption_array.append(consumption)
 
-    if len(consumption_array) > 0:
-        utils_io.write_json(consumption_json_file, consumption_array)
+        if file_name not in consumption_summary:
+            consumption_summary[file_name] = []
+        consumption_summary[file_name].append(consumption)
 
-        db = MongoDBRemote(database=DATABASE_NAME, collection=f"{_user_name}_consumption")
+    for key in consumption_summary:
+        folder = f"{consumption_directory}/{key[:4]}"
+        utils_io.create_folder_if_not_exist(folder)
+        utils_io.write_json(f"{folder}/{key}.json", consumption_summary[key])
+
+    if len(consumption_array) > 0:
+        db = MongoDBRemote(database=DATABASE_NAME, collection=f"{_user_name}_Consumption")
         db.clear()
         db.insert_many(consumption_array)
 
 
 def _fill_time_series(_user_name):
-    db = MongoDBLocal(database=DATABASE_NAME, collection=f"{_user_name}_time_series")
+    db = MongoDBLocal(database=DATABASE_NAME, collection=f"{_user_name}_TimeSeries")
     db.clear()
 
     total_records_size = 0

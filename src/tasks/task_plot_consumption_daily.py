@@ -1,19 +1,25 @@
-import src.utils.utils_csv as utils_csv
-from src.tasks import USERS_FOLDER
 import matplotlib.pyplot as plt
-import math
 
-USER = "Valdenir"
-YEAR = "2021"
-MONTH = "11"
-DAY = "11"
+from src.database import MongoDBRemote
+from src.tasks import *
 
-DATASET = f"{USERS_FOLDER}{USER}/time_series/{YEAR}/{MONTH}/{YEAR}-{MONTH}-{DAY}.csv"
-
-DATABASE_NAME = 'smart_energy'
-WATTS_SECONDS_TO_KILOWATT_HOURS = 2.778 * math.pow(10, -7)
+_user_name = "Valdenir"
 
 if __name__ == '__main__':
-    consumption = utils_csv.list_column_values(DATASET, "power")
-    plt.plot(consumption)
+
+    db = MongoDBRemote(database=DATABASE_NAME, collection=f"{_user_name}_Consumption")
+
+    date = []
+    consumption = []
+    consumption_total = 0
+
+    for data in db.find_all({"date": {'$regex': '.*-11-.*'}}):  # find for all day in month 11
+        date.append(data["date"])
+        consumption.append(data["consumption"])
+        consumption_total += data["consumption"]
+
+    plt.title(f"Total {consumption_total} KW/h")
+    plt.xticks(rotation='vertical')
+    plt.ylabel('KW/h')
+    plt.bar(date, consumption)
     plt.show()
