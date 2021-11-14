@@ -1,13 +1,4 @@
-[
-    {
-        "id": "6b0c82e4.28f77c",
-        "type": "tab",
-        "label": "Smart-Energy",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
+[{
         "id": "dc3b84e3.73c928",
         "type": "ui_gauge",
         "z": "6b0c82e4.28f77c",
@@ -30,7 +21,7 @@
         "seg1": "1000",
         "seg2": "3000",
         "className": "",
-        "x": 670,
+        "x": 810,
         "y": 220,
         "wires": []
     },
@@ -45,7 +36,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
+        "x": 600,
         "y": 240,
         "wires": [
             [
@@ -59,8 +50,7 @@
         "type": "inject",
         "z": "6b0c82e4.28f77c",
         "name": "",
-        "props": [
-            {
+        "props": [{
                 "p": "payload"
             },
             {
@@ -75,8 +65,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 180,
-        "y": 60,
+        "x": 100,
+        "y": 40,
         "wires": [
             [
                 "b337e58e.74acc8"
@@ -94,8 +84,8 @@
         "timer": "",
         "oldrc": false,
         "name": "Start Server",
-        "x": 330,
-        "y": 60,
+        "x": 290,
+        "y": 40,
         "wires": [
             [],
             [],
@@ -107,8 +97,7 @@
         "type": "inject",
         "z": "6b0c82e4.28f77c",
         "name": "",
-        "props": [
-            {
+        "props": [{
                 "p": "payload"
             },
             {
@@ -123,8 +112,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 720,
-        "y": 60,
+        "x": 600,
+        "y": 40,
         "wires": [
             [
                 "e58912c8.c2911"
@@ -142,8 +131,8 @@
         "timer": "",
         "oldrc": false,
         "name": "",
-        "x": 870,
-        "y": 60,
+        "x": 810,
+        "y": 40,
         "wires": [
             [],
             [],
@@ -160,12 +149,10 @@
         "createDir": true,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 550,
+        "x": 790,
         "y": 140,
         "wires": [
-            [
-                "7117b2af.bff0ec"
-            ]
+            []
         ]
     },
     {
@@ -179,42 +166,13 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
+        "x": 600,
         "y": 140,
         "wires": [
             [
                 "45ed0bad.c7f8c4"
             ]
         ]
-    },
-    {
-        "id": "e12c6b0b.e368b8",
-        "type": "http in",
-        "z": "6b0c82e4.28f77c",
-        "name": "",
-        "url": "/time_series",
-        "method": "post",
-        "upload": true,
-        "swaggerDoc": "",
-        "x": 150,
-        "y": 180,
-        "wires": [
-            [
-                "165b0f62.447621",
-                "f192c525.48c368"
-            ]
-        ]
-    },
-    {
-        "id": "7117b2af.bff0ec",
-        "type": "http response",
-        "z": "6b0c82e4.28f77c",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 690,
-        "y": 140,
-        "wires": []
     },
     {
         "id": "b3053663.7e2048",
@@ -254,7 +212,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 680,
+        "x": 800,
         "y": 280,
         "wires": [
             []
@@ -299,7 +257,7 @@
         "useDifferentColor": false,
         "className": "",
         "x": 830,
-        "y": 440,
+        "y": 400,
         "wires": [
             []
         ]
@@ -316,7 +274,7 @@
         "finalize": "",
         "libs": [],
         "x": 340,
-        "y": 380,
+        "y": 340,
         "wires": [
             [
                 "2aad34f72a3132ac"
@@ -337,8 +295,8 @@
         "topic": "topic",
         "topicType": "msg",
         "className": "",
-        "x": 150,
-        "y": 400,
+        "x": 110,
+        "y": 360,
         "wires": [
             [
                 "0e00d945de216f01",
@@ -355,7 +313,7 @@
         "collection": "",
         "operation": "find",
         "x": 500,
-        "y": 380,
+        "y": 340,
         "wires": [
             [
                 "e653fa2ffdad1be5"
@@ -374,7 +332,7 @@
         "finalize": "",
         "libs": [],
         "x": 660,
-        "y": 380,
+        "y": 340,
         "wires": [
             [
                 "5ccc2951d5b6bcb4"
@@ -420,7 +378,7 @@
         "useDifferentColor": false,
         "className": "",
         "x": 820,
-        "y": 380,
+        "y": 340,
         "wires": [
             []
         ]
@@ -437,7 +395,7 @@
         "finalize": "",
         "libs": [],
         "x": 660,
-        "y": 440,
+        "y": 400,
         "wires": [
             [
                 "8ce397922931b4ee"
@@ -453,7 +411,7 @@
         "collection": "",
         "operation": "aggregate",
         "x": 500,
-        "y": 440,
+        "y": 400,
         "wires": [
             [
                 "5e678d46489d6cde"
@@ -472,10 +430,48 @@
         "finalize": "",
         "libs": [],
         "x": 340,
-        "y": 440,
+        "y": 400,
         "wires": [
             [
                 "d882a13e74a47f71"
+            ]
+        ]
+    },
+    {
+        "id": "cdd0ed989f58ea04",
+        "type": "mqtt in",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "topic": "/smart_energy/publish/client/Valdenir",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "5d73ac6fbc2d7a0e",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "98740b17f279955f"
+            ]
+        ]
+    },
+    {
+        "id": "98740b17f279955f",
+        "type": "json",
+        "z": "6b0c82e4.28f77c",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "f192c525.48c368",
+                "165b0f62.447621"
             ]
         ]
     },
@@ -498,6 +494,32 @@
         "port": "27017",
         "db": "smart_energy",
         "name": "SmartEnergyDB"
+    },
+    {
+        "id": "5d73ac6fbc2d7a0e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
     },
     {
         "id": "765531fd.bdff6",
