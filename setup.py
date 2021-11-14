@@ -3,7 +3,11 @@
 
 from subprocess import call
 
-libraries = ["matplotlib", "pandas", "numpy", "pymongo[srv]"]
+libraries = [
+    "setuptools", "wheel",
+    "matplotlib", "pandas", "numpy",
+    "pymongo[srv]"
+]
 
 call("pip install " + ' '.join(libraries), shell=True)
 call("pip freeze > requirements.txt", shell=True)
