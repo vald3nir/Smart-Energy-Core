@@ -47,6 +47,12 @@ class MongoDBRemote:
         self.collection.remove(query)
 
 
+'''
+To int databse local:
+docker run -v ~/docker --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=dev -e MONGO_INITDB_ROOT_PASSWORD=1721 mongo
+'''
+
+
 class MongoDBLocal(MongoDBRemote):
 
     def __init__(self, database, collection) -> None:
