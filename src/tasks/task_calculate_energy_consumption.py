@@ -2,7 +2,7 @@ import math
 
 import src.utils.utils_csv as utils_csv
 import src.utils.utils_io as utils_io
-from src.database import MongoDBLocal, MongoDBRemote
+from src.database import MongoDB
 from src.tasks import *
 
 WATTS_SECONDS_TO_KILOWATT_HOURS = 2.778 * math.pow(10, -7)
@@ -36,13 +36,13 @@ def _fill_energy_consumption(_user_name):
         utils_io.write_json(f"{folder}/{key[5:]}.json", consumption_summary[key])
 
     if len(consumption_array) > 0:
-        db = MongoDBRemote(database=DATABASE_NAME, collection=f"{_user_name}_Consumption")
+        db = MongoDB(collection=f"{_user_name}_Consumption")
         db.clear()
         db.insert_many(consumption_array)
 
 
 def _fill_time_series(_user_name):
-    db = MongoDBLocal(database=DATABASE_NAME, collection=f"{_user_name}_TimeSeries")
+    db = MongoDB(collection=f"{_user_name}_TimeSeries")
     db.clear()
 
     total_records_size = 0
@@ -57,7 +57,7 @@ def _fill_time_series(_user_name):
         print("Saving", doc, f"{current_records_size} records")
         db.insert_many(time_series)
 
-    print(f"{DATABASE_NAME} loaded with {total_records_size} time series")
+    print(f"Database loaded with {total_records_size} time series")
 
 
 def _fill_database(_user_name):

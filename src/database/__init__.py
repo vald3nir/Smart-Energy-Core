@@ -4,7 +4,7 @@
 import pymongo
 
 
-class MongoDBRemote:
+class _MongoDBRemote:
     def __init__(self, database, collection) -> None:
         super().__init__()
 
@@ -29,8 +29,8 @@ class MongoDBRemote:
     def insert_many(self, documents):
         self.collection.insert_many(documents=documents)
 
-    def aggregate(self, query):
-        self.collection.aggregate(query)
+    def aggregate(self, pipeline):
+        return self.collection.aggregate(pipeline=pipeline)
 
     def find_all(self, query=None):
         if query is None:
@@ -53,7 +53,7 @@ docker run -v ~/docker --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNA
 '''
 
 
-class MongoDBLocal(MongoDBRemote):
+class _MongoDBLocal(_MongoDBRemote):
 
     def __init__(self, database, collection) -> None:
         super().__init__(database, collection)
@@ -65,3 +65,9 @@ class MongoDBLocal(MongoDBRemote):
         _CLIENT_URL = f"mongodb://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
 
         self.collection = pymongo.MongoClient(_CLIENT_URL)[database][collection]
+
+
+# Class used in the project
+class MongoDB(_MongoDBRemote):
+    def __init__(self, collection) -> None:
+        super().__init__('smart_energy', collection)
