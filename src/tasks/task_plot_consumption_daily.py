@@ -1,13 +1,12 @@
 import matplotlib.pyplot as plt
 
-from src.database import MongoDBRemote
-from src.tasks import *
+from src.database import MongoDB
 
 _user_name = "Valdenir"
 
 if __name__ == '__main__':
 
-    db = MongoDBRemote(database=DATABASE_NAME, collection=f"{_user_name}_Consumption")
+    db = MongoDB(collection=f"{_user_name}_Consumption")
 
     date = []
     consumption = []
