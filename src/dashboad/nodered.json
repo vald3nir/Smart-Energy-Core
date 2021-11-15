@@ -1,4 +1,12 @@
 [{
+        "id": "6b0c82e4.28f77c",
+        "type": "tab",
+        "label": "Smart-Energy",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "dc3b84e3.73c928",
         "type": "ui_gauge",
         "z": "6b0c82e4.28f77c",
@@ -423,7 +431,7 @@
         "type": "function",
         "z": "6b0c82e4.28f77c",
         "name": "",
-        "func": "var unix_timestamp = msg.payload;\n\nvar currentDate = new Date(unix_timestamp);\nvar month = ('0' + (currentDate.getMonth() + 1)).slice(-2)\n\nmsg.collection = \"Valdenir_Consumption\"\nmsg.payload = [{\n    \"$group\": {\n        \"_id\": {\n            \"$substr\": [\"$date\", 0, 7]\n        },\n        \"date\": {\n            \"$first\": \"$date\"\n        },\n        \"consumption\": {\n            \"$sum\": \"$consumption\"\n        },\n    }\n}, {\n    \"$sort\": {\n        \"date\": -1\n    }\n}]\n\nreturn msg;",
+        "func": "var unix_timestamp = msg.payload;\n\nvar currentDate = new Date(unix_timestamp);\nvar month = ('0' + (currentDate.getMonth() + 1)).slice(-2)\n\nmsg.collection = \"Valdenir_Consumption\"\nmsg.payload = [{\n    \"$group\": {\n        \"_id\": {\n            \"$substr\": [\"$date\", 0, 7]\n        },\n        \"date\": {\n            \"$first\": \"$date\"\n        },\n        \"consumption\": {\n            \"$sum\": \"$consumption\"\n        },\n    }\n}, {\n    \"$sort\": {\n        \"date\": 1\n    }\n}]\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
