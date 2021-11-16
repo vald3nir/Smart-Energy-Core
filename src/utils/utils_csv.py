@@ -23,6 +23,13 @@ def sum_columns(file_csv, column):
     return df[column].sum()
 
 
+def reduce_and_sum(file_csv, column_index, offset='60Min'):
+    df = _load_dataframe(file_csv)
+    df[column_index] = pd.to_datetime(df[column_index])
+    data_json = df.groupby(pd.Grouper(key=column_index, freq=offset)).sum().reset_index().to_json()
+    return json.loads(data_json)
+
+
 def csv_to_json(file_csv):
     df = _load_dataframe(file_csv)
     frame = df.iloc[:]
@@ -33,6 +40,11 @@ def read_last_row(file_csv, n_rows=5):
     df = _load_dataframe(file_csv)
     frame = df.iloc[-n_rows:]
     return _dataframe_to_json(frame)
+
+
+def create_file_csv(file_path, fields):
+    df = pd.DataFrame(fields)
+    df.to_csv(file_path, index=False)
 
 
 def append_file_csv(file_path, fields):
