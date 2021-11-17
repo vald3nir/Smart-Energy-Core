@@ -1,5 +1,5 @@
 import src.utils.utils_io as utils_io
-from src.tasks import USERS_FOLDER
+from src.tasks.constants import get_path_time_series
 
 header = "created_at,device_id,power\n"
 
@@ -9,14 +9,8 @@ def _put_header(doc):
     utils_io.write_array(doc, [header, _lines])
 
 
-def _fill_headers(_user_name):
-    data_directory = f"{USERS_FOLDER}{_user_name}/time_series"
-    for doc in utils_io.list_all_files(data_directory):
+def check_time_series_header(_user_name):
+    for doc in utils_io.list_all_files(get_path_time_series(_user_name)):
         if header != utils_io.read_first_line(doc):
             _put_header(doc)
             print(f"put header in {doc}")
-
-
-if __name__ == '__main__':
-    for user_name in utils_io.list_sub_folders(USERS_FOLDER):
-        _fill_headers(user_name)

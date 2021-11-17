@@ -26,6 +26,14 @@ def check_if_file_exist(file):
     return os.path.isfile(file)
 
 
+def split_path_file(doc):
+    return os.path.split(doc)
+
+
+def join_path_file(folder, doc):
+    return os.path.join(folder, doc)
+
+
 def create_folder_if_not_exist(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)

@@ -1,12 +1,10 @@
 from datetime import datetime
+from pytz import timezone
 
 
-def get_date_formatted(date_time_str):
-    if len(date_time_str) == 26:
-        date = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
-    else:
-        date = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
-    return date.strftime("%Y-%m-%dT%H:%M:%SZ")
+def timestamp_to_date(timestamp):
+    timestamp = timestamp / 1000
+    return datetime.fromtimestamp(timestamp, tz=timezone('America/Sao_Paulo'))
 
 
 def get_today_date_formatted():
