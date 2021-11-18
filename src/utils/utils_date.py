@@ -2,9 +2,9 @@ from datetime import datetime
 from pytz import timezone
 
 
-def timestamp_to_date(timestamp):
+def timestamp_to_date_string(timestamp):
     timestamp = timestamp / 1000
-    return datetime.fromtimestamp(timestamp, tz=timezone('America/Sao_Paulo'))
+    return str(datetime.fromtimestamp(timestamp, tz=timezone('America/Sao_Paulo')))
 
 
 def get_today_date_formatted():
