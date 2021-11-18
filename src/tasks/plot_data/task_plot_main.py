@@ -6,7 +6,7 @@ _user_name = "Valdenir"
 
 
 def run_plot_consumption_daily():
-    plot_consumption_daily(_user_name=_user_name, _date="2021-10-05")
+    plot_consumption_daily(_user_name=_user_name, _date="2021-11-16")
 
 
 def run_plot_consumption_monthly():

@@ -19,5 +19,5 @@ def plot_consumption_daily(_user_name, _date):
     plt.title(f"Total {consumption_total} KW/h")
     plt.xticks(rotation='vertical')
     plt.ylabel('W/h')
-    plt.plot(dates, consumptions)
+    plt.bar(dates, consumptions)
     plt.show()
