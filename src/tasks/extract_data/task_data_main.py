@@ -1,6 +1,6 @@
 import src.utils.utils_io as utils_io
 from src.tasks import USERS_FOLDER
-from src.tasks.extract_data.task_database_backup import backup_collection
+from src.tasks.database.task_database_backup import backup_collection
 from src.tasks.extract_data.task_reduce_time_series import reduce_time_series
 from src.tasks.extract_data.task_validate_datasets_header import check_time_series_header
 

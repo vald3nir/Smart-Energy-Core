@@ -1,7 +1,7 @@
 import src.utils.utils_io as utils_io
 from src.tasks import get_path_time_series
 
-_header = "created_at,device_id,power\n"
+_header = "created_at,power\n"
 
 
 def _put_header(doc):
