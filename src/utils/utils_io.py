@@ -63,3 +63,7 @@ def write_array(file, lines):
     for line in lines:
         f.write(line)
     f.close()
+
+
+def delete_file(file_path):
+    os.remove(file_path)

@@ -27,6 +27,8 @@ def reduce_time_series(_user_name):
             power = consumption_list[key] * WATTS_SECONDS_TO_KILOWATT_HOURS
             consumptions.append(power)
 
+        utils_io.delete_file(doc)
+
     if len(dates) > 0:
         dataframe = utils_csv.create_csv({'date': dates, 'consumption_kwh': consumptions})
         data_json = utils_csv.dataframe_to_json(dataframe)
