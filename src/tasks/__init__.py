@@ -1,16 +1,13 @@
-import src.utils.utils_io as utils_io
-from src.tasks.constants import USERS_FOLDER
-from src.tasks.task_reduce_time_series import reduce_time_series
-from src.tasks.task_validate_datasets_header import check_time_series_header
+USERS_FOLDER = "../../users/"
 
-if __name__ == '__main__':
 
-    print("Step 1: checking if the time series has header")
-    for user_name in utils_io.list_sub_folders(USERS_FOLDER):
-        check_time_series_header(user_name)
+def get_time_series_collection_name(_user_name):
+    return f"{_user_name}_TimeSeries"
 
-    print("Step 2: reducing if the time series files")
-    for user_name in utils_io.list_sub_folders(USERS_FOLDER):
-        reduce_time_series(user_name)
 
-    print("Finish")
+def get_path_time_series(_user_name):
+    return f"{USERS_FOLDER}{_user_name}/time_series"
+
+
+def get_path_consumption_summary(_user_name):
+    return f"{USERS_FOLDER}{_user_name}/consumption_summary.csv"

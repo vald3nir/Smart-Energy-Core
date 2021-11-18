@@ -29,15 +29,13 @@ def _fill_energy_consumption(_user_name):
     for key in consumption_summary:
         folder = f"{consumption_directory}/{key[:4]}"
         utils_io.create_folder_if_not_exist(folder)
-        # to-do: verificar se já exite o arquivo, caso sim, adicionar ao final do array
         utils_io.write_json(f"{folder}/{key[5:]}.json", consumption_summary[key])
 
     if len(consumption_array) > 0:
         db = MongoDB(collection=f"{_user_name}_Consumption")
-        # db.clear()
         db.insert_many(consumption_array)
 
 
-if __name__ == '__main__':
-    for user_name in utils_io.list_sub_folders(USERS_FOLDER):
-        _fill_energy_consumption(user_name)
+# if __name__ == '__main__':
+#     for user_name in utils_io.list_sub_folders(USERS_FOLDER):
+#         _fill_energy_consumption(user_name)

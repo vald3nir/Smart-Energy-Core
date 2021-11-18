@@ -1,13 +1,11 @@
 import matplotlib.pyplot as plt
 
 from src.database import MongoDB
+from src.tasks import get_time_series_collection_name
 
-_user_name = "Valdenir"
-year = 2021
 
-if __name__ == '__main__':
-
-    db = MongoDB(collection=f"{_user_name}_Consumption")
+def plot_consumption_yearly(_user_name, _year):
+    db = MongoDB(collection=get_time_series_collection_name(_user_name))
 
     date = []
     consumption = []
@@ -16,7 +14,9 @@ if __name__ == '__main__':
     for data in db.aggregate([
         {
             "$match": {
-                "date": {'$regex': f"{year}-.*"}
+                "date": {
+                    '$regex': f"{_year}-.*"
+                }
             }
         },
         {
@@ -27,10 +27,11 @@ if __name__ == '__main__':
                 "date": {
                     "$first": "$date"
                 },
-                "consumption": {
-                    "$sum": "$consumption"
+                "consumption_kwh": {
+                    "$sum": "$consumption_kwh"
                 },
             }
+
         },
         {
             "$sort": {
@@ -38,11 +39,11 @@ if __name__ == '__main__':
             }
         }
     ]):
-        date.append(data["date"])
-        consumption.append(data["consumption"])
-        consumption_total += data["consumption"]
+        date.append(data["_id"])
+        consumption.append(data["consumption_kwh"])
+        consumption_total += data["consumption_kwh"]
 
-    plt.title(f"Total {consumption_total} KW/h [Year: {year}]")
+    plt.title(f"Year {_year}: {consumption_total} KW/h")
     plt.xticks(rotation='vertical')
     plt.ylabel('KW/h')
     plt.bar(date, consumption)

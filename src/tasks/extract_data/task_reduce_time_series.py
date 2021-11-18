@@ -1,8 +1,12 @@
+import math
+
 import src.utils.utils_csv as utils_csv
 import src.utils.utils_date as utils_date
 import src.utils.utils_io as utils_io
 from src.database import MongoDB
-from src.tasks.constants import *
+from src.tasks import *
+
+WATTS_SECONDS_TO_KILOWATT_HOURS = 2.778 * math.pow(10, -7)
 
 
 def reduce_time_series(_user_name):
@@ -16,7 +20,7 @@ def reduce_time_series(_user_name):
         consumption_list = data_json["power"]
 
         for key in created_at_list.keys():
-            date = utils_date.timestamp_to_date(created_at_list[key])
+            date = utils_date.timestamp_to_date_string(created_at_list[key])
             dates.append(date)
 
         for key in consumption_list.keys():
@@ -24,12 +28,8 @@ def reduce_time_series(_user_name):
             consumptions.append(power)
 
     if len(dates) > 0:
-        time_series_summary_file = utils_io.join_path_file(get_path_consumption_summary(_user_name), "time_series.csv")
-        fields = {'date': dates, 'consumption_kwh': consumptions}
+        dataframe = utils_csv.create_csv({'date': dates, 'consumption_kwh': consumptions})
+        data_json = utils_csv.dataframe_to_json(dataframe)
 
-        utils_csv.create_file_csv(file_path=time_series_summary_file, fields=fields)
-
-        time_series_json = utils_csv.csv_to_json(time_series_summary_file)
-
-        db = MongoDB(collection=f"{_user_name}_TimeSeries")
-        db.insert_many(time_series_json)
+        db = MongoDB(collection=get_time_series_collection_name(_user_name))
+        db.insert_many(data_json)
