@@ -64,3 +64,10 @@ def create_file_csv(file_path, fields):
 def append_file_csv(file_path, fields):
     with open(file_path, 'a') as f:
         csv.writer(f).writerow(fields)
+
+
+def split_data_frame_by_value(file_csv, column, value):
+    df = _load_dataframe(file_csv)
+    low_values = df[df[column] < value]
+    high_values = df[df[column] >= value]
+    return low_values, high_values
