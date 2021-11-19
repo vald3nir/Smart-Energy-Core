@@ -1,9 +1,9 @@
 import src.utils.utils_io as utils_io
 from src.tasks import USERS_FOLDER
 from src.tasks.database.task_database_backup import backup_collection
+from src.tasks.extract_data.task_check_peaks import normalize_data_sets_peaks
 from src.tasks.extract_data.task_reduce_time_series import reduce_time_series
-from src.tasks.extract_data.task_remove_data_sets_peaks import normalize_data_sets_peaks
-from src.tasks.extract_data.task_validate_datasets_header import check_time_series_header
+from src.tasks.extract_data.task_validate_header import check_time_series_header
 
 if __name__ == '__main__':
 

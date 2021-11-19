@@ -15,7 +15,7 @@ def _frame_to_json(frame):
 
 
 def _load_dataframe(file_csv):
-    return pd.read_csv(file_csv, error_bad_lines=False)
+    return pd.read_csv(file_csv)
 
 
 def list_column_values(file_csv, column):
@@ -76,4 +76,4 @@ def split_data_frame_by_value(file_csv, column, value):
 def normalize_data_frame_column(file_csv, column, value):
     df = _load_dataframe(file_csv)
     df[column][df[column] >= value] = value
-    return df
+    create_file_csv(file_csv, df)
