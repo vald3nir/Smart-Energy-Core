@@ -71,3 +71,9 @@ def split_data_frame_by_value(file_csv, column, value):
     low_values = df[df[column] < value]
     high_values = df[df[column] >= value]
     return low_values, high_values
+
+
+def normalize_data_frame_column(file_csv, column, value):
+    df = _load_dataframe(file_csv)
+    df[column][df[column] >= value] = value
+    return df

@@ -17,5 +17,5 @@ def run_backup_collection():
 
 
 if __name__ == '__main__':
-    # run_restore_database()
-    run_backup_collection()
+    run_restore_database()
+    # run_backup_collection()
