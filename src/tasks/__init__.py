@@ -1,4 +1,4 @@
-USERS_FOLDER = "../../users/"
+USERS_FOLDER = "src/users/"
 
 
 def get_time_series_collection_name(_user_name):
