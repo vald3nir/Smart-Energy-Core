@@ -30,13 +30,10 @@ def calculate_energy_consumption():
         backup_collection(user_name)
 
 
-def plot_consumption():
+if __name__ == '__main__':
+    calculate_energy_consumption()
+
     _user_name = "Valdenir"
     # plot_consumption_daily(_user_name=_user_name, _date="2021-11-18")
-    plot_consumption_monthly(_user_name=_user_name, _date="2021-10")
+    # plot_consumption_monthly(_user_name=_user_name, _date="2021-10")
     # plot_consumption_yearly(_user_name=_user_name, _year="2021")
-
-
-if __name__ == '__main__':
-    # calculate_energy_consumption()
-    plot_consumption()
