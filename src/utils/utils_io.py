@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 
 
 def list_sub_folders(directory):
@@ -67,3 +68,7 @@ def write_array(file, lines):
 
 def delete_file(file_path):
     os.remove(file_path)
+
+
+def move_file(file_path, new_path):
+    shutil.move(file_path, new_path)

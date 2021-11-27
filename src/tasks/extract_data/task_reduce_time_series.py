@@ -4,7 +4,7 @@ import src.utils.utils_csv as utils_csv
 import src.utils.utils_date as utils_date
 import src.utils.utils_io as utils_io
 from src.database import MongoDB
-from src.tasks import *
+from src.tasks import get_path_time_series_cached, get_time_series_collection_name
 
 WATTS_SECONDS_TO_KILOWATT_HOURS = 2.778 * math.pow(10, -7)
 
@@ -13,7 +13,7 @@ def reduce_time_series(_user_name):
     dates = []
     consumptions = []
 
-    for doc in utils_io.list_all_files(get_path_time_series(_user_name)):
+    for doc in utils_io.list_all_files(get_path_time_series_cached(_user_name)):
         data_json = utils_csv.reduce_and_sum(file_csv=doc, column_index='created_at')
 
         created_at_list = data_json["created_at"]
