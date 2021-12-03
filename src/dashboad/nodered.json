@@ -1,5 +1,4 @@
-[
-  {
+[{
     "id": "db6cee61a5059840",
     "type": "tab",
     "label": "Smart Energy",
@@ -32,8 +31,7 @@
     "type": "inject",
     "z": "db6cee61a5059840",
     "name": "",
-    "props": [
-      {
+    "props": [{
         "p": "payload"
       },
       {
@@ -134,7 +132,7 @@
     "type": "function",
     "z": "db6cee61a5059840",
     "name": "",
-    "func": "var labels = []\nvar data = [[]]\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(10, 16))\n    data[0].push(item.consumption_kwh * 1000)\n});\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\nreturn msg;",
+    "func": "var labels = []\nvar data = [[]]\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(10, 16))\n    data[0].push(item.consumption_kwh * 1000)\n});\n\ndata[0].reverse();\nlabels.reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
@@ -527,8 +525,7 @@
     "height": 0,
     "passthru": true,
     "multiple": false,
-    "options": [
-      {
+    "options": [{
         "label": "Últimos 30 dias",
         "value": "30",
         "type": "str"
@@ -598,8 +595,7 @@
     "height": 0,
     "passthru": true,
     "multiple": false,
-    "options": [
-      {
+    "options": [{
         "label": "Últimos 24 meses",
         "value": "24",
         "type": "str"
