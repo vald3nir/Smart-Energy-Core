@@ -5,11 +5,12 @@ import src.utils.utils_io as utils_io
 from src.tasks import USERS_FOLDER
 from src.tasks.database.task_database_backup import backup_collection
 from src.tasks.extract_data.task_cache_files import cache_time_series
+from src.tasks.extract_data.task_check_duplicates import check_duplicates
 from src.tasks.extract_data.task_check_peaks import normalize_data_sets_peaks
 from src.tasks.extract_data.task_reduce_time_series import reduce_time_series
 from src.tasks.extract_data.task_validate_header import check_time_series_header
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     print("Step 0: move the time series to cache")
     for user_name in utils_io.list_sub_folders(USERS_FOLDER):
@@ -27,6 +28,10 @@ if __name__ == '__main__':
     for user_name in utils_io.list_sub_folders(USERS_FOLDER):
         reduce_time_series(user_name)
 
-    print("Step 4: database backup")
+    print("Step 4: check duplicates")
+    for user_name in utils_io.list_sub_folders(USERS_FOLDER):
+        check_duplicates(user_name)
+
+    print("Step 5: database backup")
     for user_name in utils_io.list_sub_folders(USERS_FOLDER):
         backup_collection(user_name)
