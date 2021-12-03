@@ -7,11 +7,7 @@ from src.tasks import get_time_series_collection_name
 def plot_consumption_monthly(_user_name, _date):
     db = MongoDB(collection=get_time_series_collection_name(_user_name))
 
-    date = []
-    consumption = []
-    consumption_total = 0
-
-    for data in db.aggregate([
+    query = [
         {
             "$match": {
                 "date": {
@@ -38,7 +34,13 @@ def plot_consumption_monthly(_user_name, _date):
                 "date": 1
             }
         }
-    ]):
+    ]
+
+    date = []
+    consumption = []
+    consumption_total = 0
+
+    for data in db.aggregate(query):
         date.append(data["_id"][8:])
         consumption.append(data["consumption_kwh"])
         consumption_total += data["consumption_kwh"]
