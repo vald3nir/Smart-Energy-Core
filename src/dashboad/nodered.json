@@ -1,5 +1,6 @@
-[{
-    "id": "db6cee61a5059840",
+[
+  {
+    "id": "357676d79769c533",
     "type": "tab",
     "label": "Smart Energy",
     "disabled": false,
@@ -7,9 +8,9 @@
     "env": []
   },
   {
-    "id": "f5a6d37d9a808466",
+    "id": "2980b231dfb8ce8a",
     "type": "function",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "",
     "func": "msg.payload = msg.payload.power;\nreturn msg;",
     "outputs": 1,
@@ -17,21 +18,23 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 480,
-    "y": 220,
+    "x": 460,
+    "y": 280,
     "wires": [
       [
-        "c46ffbaa55d6b58b",
-        "d402280a4cecfd9f"
+        "949f4db555eb17cc",
+        "c8c283fc30a47ff7",
+        "22e5f98039ac7caf"
       ]
     ]
   },
   {
-    "id": "f8a384d3c10627b1",
+    "id": "adcfeb26ad688ac4",
     "type": "inject",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "",
-    "props": [{
+    "props": [
+      {
         "p": "payload"
       },
       {
@@ -46,27 +49,28 @@
     "topic": "",
     "payload": "",
     "payloadType": "date",
-    "x": 180,
-    "y": 40,
+    "x": 120,
+    "y": 60,
     "wires": [
       [
-        "34759a087e832b34"
+        "5d734189544602ba"
       ]
     ]
   },
   {
-    "id": "34759a087e832b34",
+    "id": "5d734189544602ba",
     "type": "exec",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "command": "sudo reboot",
     "addpay": false,
     "append": "",
     "useSpawn": "false",
     "timer": "",
+    "winHide": false,
     "oldrc": false,
     "name": "",
-    "x": 330,
-    "y": 40,
+    "x": 290,
+    "y": 60,
     "wires": [
       [],
       [],
@@ -74,63 +78,63 @@
     ]
   },
   {
-    "id": "5b0008d4f864a1a1",
+    "id": "32fd7d32d0e388c1",
     "type": "file",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "file",
     "filename": "",
     "appendNewline": true,
     "createDir": true,
     "overwriteFile": "false",
     "encoding": "none",
-    "x": 610,
-    "y": 120,
+    "x": 630,
+    "y": 100,
     "wires": [
       []
     ]
   },
   {
-    "id": "7a2baa5df204274a",
+    "id": "5a0ea94d53ad8399",
     "type": "function",
-    "z": "db6cee61a5059840",
-    "name": "",
-    "func": "var date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/dev/Documentos/github/Smart-Energy-System/Smart-Energy-Datasets/src/users/Valdenir/time_series/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.power;\n\nreturn msg;",
+    "z": "357676d79769c533",
+    "name": "repositório",
+    "func": "var date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/Smart-Energy-System/Smart-Energy-Datasets/src/users/Valdenir/time_series/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.power;\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 480,
-    "y": 120,
+    "x": 470,
+    "y": 100,
     "wires": [
       [
-        "5b0008d4f864a1a1"
+        "32fd7d32d0e388c1"
       ]
     ]
   },
   {
-    "id": "9087e3aa5fa86538",
+    "id": "229c18c22f1b151e",
     "type": "function",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "",
-    "func": "user_name = \"Valdenir\";\n\nmsg.collection = user_name + \"_TimeSeries\";\nmsg.limit = 24;\nmsg.payload = {};\nmsg.sort = {\n    \"date\": -1\n};\n\nreturn msg;",
+    "func": "user_name = \"Valdenir\";\n\nmsg.collection = user_name + \"_TimeSeries\";\nmsg.limit = msg.payload;\nmsg.payload = {};\nmsg.sort = {\n    \"date\": -1\n};\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
     "x": 300,
-    "y": 300,
+    "y": 420,
     "wires": [
       [
-        "9c5e8edf70d31d02"
+        "dd46d7a9a7757fce"
       ]
     ]
   },
   {
-    "id": "8803f9296c6168c6",
+    "id": "4bdb5a32eeb9bf35",
     "type": "function",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "",
     "func": "var labels = []\nvar data = [[]]\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(10, 16))\n    data[0].push(item.consumption_kwh * 1000)\n});\n\ndata[0].reverse();\nlabels.reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\nreturn msg;",
     "outputs": 1,
@@ -139,17 +143,17 @@
     "finalize": "",
     "libs": [],
     "x": 620,
-    "y": 300,
+    "y": 420,
     "wires": [
       [
-        "bb6b5282557f074d"
+        "d503c84d07d92b3b"
       ]
     ]
   },
   {
-    "id": "9c1d75e30a9ed6d1",
+    "id": "3469a5d57c0c9e79",
     "type": "function",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "",
     "func": "var labels = []\nvar data = [[]]\n\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(5, 10))\n    data[0].push(item.consumption_kwh)\n});\n\ndata[0].reverse();\nlabels.reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\n\nreturn msg;",
     "outputs": 1,
@@ -158,17 +162,17 @@
     "finalize": "",
     "libs": [],
     "x": 620,
-    "y": 360,
+    "y": 480,
     "wires": [
       [
-        "92e99d9f265635f1"
+        "d35ac2236482bfe8"
       ]
     ]
   },
   {
-    "id": "6e0b378cede38a1d",
+    "id": "0c19444d4f19b224",
     "type": "function",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "",
     "func": "var num_days = parseInt(msg.payload);\n\nuser_name = \"Valdenir\"\n\nmsg.collection = user_name + \"_TimeSeries\"\nmsg.payload = [\n\n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 10]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n\n    }, {\n        \"$sort\": {\n            \"date\": -1\n        }\n    }, {\n        \"$limit\": num_days\n    }\n]\n\nreturn msg;",
     "outputs": 1,
@@ -177,17 +181,17 @@
     "finalize": "",
     "libs": [],
     "x": 300,
-    "y": 360,
+    "y": 480,
     "wires": [
       [
-        "0d36b39e76c35ad5"
+        "f300fa419f6dabac"
       ]
     ]
   },
   {
-    "id": "650ec40d225821ac",
+    "id": "bac674feb9adf373",
     "type": "mqtt in",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "Sensor",
     "topic": "/smart_energy/publish/client/Valdenir",
     "qos": "0",
@@ -197,35 +201,36 @@
     "rap": true,
     "rh": 0,
     "inputs": 0,
-    "x": 190,
-    "y": 160,
+    "x": 70,
+    "y": 220,
     "wires": [
       [
-        "8f5405574708108d"
+        "c2e1bbde6c87bb16"
       ]
     ]
   },
   {
-    "id": "8f5405574708108d",
+    "id": "c2e1bbde6c87bb16",
     "type": "json",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "",
     "property": "payload",
     "action": "",
     "pretty": false,
-    "x": 330,
-    "y": 160,
+    "x": 190,
+    "y": 220,
     "wires": [
       [
-        "7a2baa5df204274a",
-        "f5a6d37d9a808466"
+        "5a0ea94d53ad8399",
+        "2980b231dfb8ce8a",
+        "a2e79874a9470ebf"
       ]
     ]
   },
   {
-    "id": "066e20c5f1a362ad",
+    "id": "bfc5fe79b3c9b7f4",
     "type": "function",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "",
     "func": "var labels = []\nvar data = [[]]\n\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(0, 7))\n    data[0].push(item.consumption_kwh)\n});\n\nlabels.reverse();\ndata[0].reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\n\nreturn msg;",
     "outputs": 1,
@@ -234,17 +239,17 @@
     "finalize": "",
     "libs": [],
     "x": 620,
-    "y": 420,
+    "y": 540,
     "wires": [
       [
-        "e5c7ac1511b08c1c"
+        "5265390d21d89649"
       ]
     ]
   },
   {
-    "id": "a832e9f481e721ee",
+    "id": "06185296e433c345",
     "type": "function",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "",
     "func": "var num_months = parseInt(msg.payload);\n\nuser_name = \"Valdenir\"\n\nmsg.collection = user_name + \"_TimeSeries\"\nmsg.payload = [{\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 7]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n    },\n    {\n        \"$sort\": {\n            \"date\": -1\n        }\n    },\n    {\n        \"$limit\": num_months\n    }\n]\n\nreturn msg;",
     "outputs": 1,
@@ -253,17 +258,17 @@
     "finalize": "",
     "libs": [],
     "x": 300,
-    "y": 420,
+    "y": 540,
     "wires": [
       [
-        "12961ada64aad7af"
+        "0473b0132147bc5d"
       ]
     ]
   },
   {
-    "id": "c46ffbaa55d6b58b",
+    "id": "949f4db555eb17cc",
     "type": "ui_gauge",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "Tempo Real",
     "group": "2f12d5f7.07b6aa",
     "order": 1,
@@ -274,7 +279,7 @@
     "label": "w",
     "format": "{{value}}",
     "min": 0,
-    "max": "5000",
+    "max": "2000",
     "colors": [
       "#00b500",
       "#e6e600",
@@ -283,14 +288,14 @@
     "seg1": "1000",
     "seg2": "3000",
     "className": "",
-    "x": 630,
-    "y": 200,
+    "x": 650,
+    "y": 280,
     "wires": []
   },
   {
-    "id": "d402280a4cecfd9f",
+    "id": "c8c283fc30a47ff7",
     "type": "ui_chart",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "Histórico",
     "group": "2f12d5f7.07b6aa",
     "order": 2,
@@ -306,7 +311,7 @@
     "ymin": "",
     "ymax": "",
     "removeOlder": 1,
-    "removeOlderPoints": "2000",
+    "removeOlderPoints": "500",
     "removeOlderUnit": "604800",
     "cutout": 0,
     "useOneColor": false,
@@ -325,16 +330,16 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 620,
-    "y": 240,
+    "x": 640,
+    "y": 320,
     "wires": [
       []
     ]
   },
   {
-    "id": "92e99d9f265635f1",
+    "id": "d35ac2236482bfe8",
     "type": "ui_chart",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "Consumo ao longo dos dias",
     "group": "2f12d5f7.07b6aa",
     "order": 6,
@@ -370,21 +375,21 @@
     "useDifferentColor": false,
     "className": "",
     "x": 820,
-    "y": 360,
+    "y": 480,
     "wires": [
       []
     ]
   },
   {
-    "id": "bb6b5282557f074d",
+    "id": "d503c84d07d92b3b",
     "type": "ui_chart",
-    "z": "db6cee61a5059840",
-    "name": "Consumo nas últimas 24 horas",
+    "z": "357676d79769c533",
+    "name": "Consumo nas últimas horas",
     "group": "2f12d5f7.07b6aa",
     "order": 4,
     "width": "24",
     "height": "5",
-    "label": "Consumo nas últimas 24 horas [W/h]",
+    "label": "Consumo nas últimas horas [W/h]",
     "chartType": "line",
     "legend": "false",
     "xformat": "D/M",
@@ -413,16 +418,16 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 830,
-    "y": 300,
+    "x": 820,
+    "y": 420,
     "wires": [
       []
     ]
   },
   {
-    "id": "e5c7ac1511b08c1c",
+    "id": "5265390d21d89649",
     "type": "ui_chart",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "name": "Consumo ao longo dos meses",
     "group": "2f12d5f7.07b6aa",
     "order": 8,
@@ -458,173 +463,199 @@
     "useDifferentColor": false,
     "className": "",
     "x": 830,
-    "y": 420,
+    "y": 540,
     "wires": [
       []
     ]
   },
   {
-    "id": "9c5e8edf70d31d02",
+    "id": "dd46d7a9a7757fce",
     "type": "mongodb in",
-    "z": "db6cee61a5059840",
+    "z": "357676d79769c533",
     "mongodb": "31d096168132145b",
     "name": "",
     "collection": "",
     "operation": "find",
     "x": 460,
-    "y": 300,
-    "wires": [
-      [
-        "8803f9296c6168c6"
-      ]
-    ]
-  },
-  {
-    "id": "0d36b39e76c35ad5",
-    "type": "mongodb in",
-    "z": "db6cee61a5059840",
-    "mongodb": "31d096168132145b",
-    "name": "",
-    "collection": "",
-    "operation": "aggregate",
-    "x": 460,
-    "y": 360,
-    "wires": [
-      [
-        "9c1d75e30a9ed6d1"
-      ]
-    ]
-  },
-  {
-    "id": "12961ada64aad7af",
-    "type": "mongodb in",
-    "z": "db6cee61a5059840",
-    "mongodb": "31d096168132145b",
-    "name": "",
-    "collection": "",
-    "operation": "aggregate",
-    "x": 460,
     "y": 420,
     "wires": [
       [
-        "066e20c5f1a362ad"
+        "4bdb5a32eeb9bf35"
       ]
     ]
   },
   {
-    "id": "f8b4d3424a3fb119",
-    "type": "ui_dropdown",
-    "z": "db6cee61a5059840",
+    "id": "f300fa419f6dabac",
+    "type": "mongodb in",
+    "z": "357676d79769c533",
+    "mongodb": "31d096168132145b",
+    "name": "",
+    "collection": "",
+    "operation": "aggregate",
+    "x": 460,
+    "y": 480,
+    "wires": [
+      [
+        "3469a5d57c0c9e79"
+      ]
+    ]
+  },
+  {
+    "id": "0473b0132147bc5d",
+    "type": "mongodb in",
+    "z": "357676d79769c533",
+    "mongodb": "31d096168132145b",
+    "name": "",
+    "collection": "",
+    "operation": "aggregate",
+    "x": 460,
+    "y": 540,
+    "wires": [
+      [
+        "bfc5fe79b3c9b7f4"
+      ]
+    ]
+  },
+  {
+    "id": "e12b945cd331d99a",
+    "type": "ui_slider",
+    "z": "357676d79769c533",
+    "name": "",
+    "label": "Seleção de horas",
+    "tooltip": "",
+    "group": "2f12d5f7.07b6aa",
+    "order": 3,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "outs": "end",
+    "topic": "topic",
+    "topicType": "msg",
+    "min": "3",
+    "max": "120",
+    "step": 1,
+    "className": "",
+    "x": 130,
+    "y": 420,
+    "wires": [
+      [
+        "229c18c22f1b151e"
+      ]
+    ]
+  },
+  {
+    "id": "3c1b815556b184cf",
+    "type": "ui_slider",
+    "z": "357676d79769c533",
     "name": "",
     "label": "Seleção de dias",
     "tooltip": "",
-    "place": "Select option",
     "group": "2f12d5f7.07b6aa",
     "order": 5,
     "width": 0,
     "height": 0,
     "passthru": true,
-    "multiple": false,
-    "options": [{
-        "label": "Últimos 30 dias",
-        "value": "30",
-        "type": "str"
-      },
-      {
-        "label": "Últimos 15 dias",
-        "value": "15",
-        "type": "str"
-      },
-      {
-        "label": "Últimos 5 dias",
-        "value": "5",
-        "type": "str"
-      }
-    ],
-    "payload": "",
+    "outs": "end",
     "topic": "topic",
     "topicType": "msg",
+    "min": "1",
+    "max": "120",
+    "step": 1,
     "className": "",
-    "x": 140,
-    "y": 360,
+    "x": 120,
+    "y": 480,
     "wires": [
       [
-        "6e0b378cede38a1d"
+        "0c19444d4f19b224"
       ]
     ]
   },
   {
-    "id": "530b65458d37e03f",
-    "type": "ui_button",
-    "z": "db6cee61a5059840",
-    "name": "Atualizar 24 horas",
-    "group": "2f12d5f7.07b6aa",
-    "order": 3,
-    "width": 0,
-    "height": 0,
-    "passthru": false,
-    "label": "Atualizar",
-    "tooltip": "",
-    "color": "",
-    "bgcolor": "",
-    "className": "",
-    "icon": "",
-    "payload": "",
-    "payloadType": "str",
-    "topic": "topic",
-    "topicType": "msg",
-    "x": 130,
-    "y": 300,
-    "wires": [
-      [
-        "9087e3aa5fa86538"
-      ]
-    ]
-  },
-  {
-    "id": "148795d91875485d",
-    "type": "ui_dropdown",
-    "z": "db6cee61a5059840",
+    "id": "4fe4b70d2ad97f86",
+    "type": "ui_slider",
+    "z": "357676d79769c533",
     "name": "",
     "label": "Seleção de meses",
     "tooltip": "",
-    "place": "Select option",
     "group": "2f12d5f7.07b6aa",
     "order": 7,
     "width": 0,
     "height": 0,
     "passthru": true,
-    "multiple": false,
-    "options": [{
-        "label": "Últimos 24 meses",
-        "value": "24",
-        "type": "str"
-      },
-      {
-        "label": "Últimos 12 meses",
-        "value": "12",
-        "type": "str"
-      },
-      {
-        "label": "Últimos 6 meses",
-        "value": "6",
-        "type": "str"
-      },
-      {
-        "label": "Últimos 3 meses",
-        "value": "3",
-        "type": "str"
-      }
-    ],
-    "payload": "",
+    "outs": "end",
     "topic": "topic",
     "topicType": "msg",
+    "min": "1",
+    "max": "48",
+    "step": 1,
     "className": "",
     "x": 130,
-    "y": 420,
+    "y": 540,
     "wires": [
       [
-        "a832e9f481e721ee"
+        "06185296e433c345"
+      ]
+    ]
+  },
+  {
+    "id": "22e5f98039ac7caf",
+    "type": "ui_gauge",
+    "z": "357676d79769c533",
+    "name": "Tempo Real",
+    "group": "34d4d648724265de",
+    "order": 1,
+    "width": "6",
+    "height": "6",
+    "gtype": "donut",
+    "title": "",
+    "label": "w",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "2000",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "1000",
+    "seg2": "3000",
+    "className": "",
+    "x": 650,
+    "y": 240,
+    "wires": []
+  },
+  {
+    "id": "c2c4c0cbd12be67b",
+    "type": "file",
+    "z": "357676d79769c533",
+    "name": "file",
+    "filename": "",
+    "appendNewline": true,
+    "createDir": true,
+    "overwriteFile": "false",
+    "encoding": "none",
+    "x": 630,
+    "y": 160,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "a2e79874a9470ebf",
+    "type": "function",
+    "z": "357676d79769c533",
+    "name": "cache",
+    "func": "var date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/Smart-Energy-System/Datasets/users/Valdenir/time_series/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.power;\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 160,
+    "wires": [
+      [
+        "c2c4c0cbd12be67b"
       ]
     ]
   },
@@ -662,7 +693,8 @@
     "order": 1,
     "disp": false,
     "width": "24",
-    "collapse": false
+    "collapse": false,
+    "className": ""
   },
   {
     "id": "31d096168132145b",
@@ -675,12 +707,32 @@
     "name": "SmartEnergyDB"
   },
   {
+    "id": "34d4d648724265de",
+    "type": "ui_group",
+    "name": "Dasboard",
+    "tab": "e3a9d083fbda71f2",
+    "order": 1,
+    "disp": false,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
     "id": "765531fd.bdff6",
     "type": "ui_tab",
-    "name": "Smart Energy",
+    "name": "Dashboard",
     "icon": "dashboard",
+    "order": 2,
+    "disabled": false,
+    "hidden": false
+  },
+  {
+    "id": "e3a9d083fbda71f2",
+    "type": "ui_tab",
+    "name": "Tempo Real",
+    "icon": "Sensor",
     "order": 1,
     "disabled": false,
-    "hidden": true
+    "hidden": false
   }
 ]
