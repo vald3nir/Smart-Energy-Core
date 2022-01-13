@@ -1,13 +1,8 @@
-# coding=utf-8
-# !/usr/bin/python3
+from src.utils.setup_utils import load_libraries
 
-from subprocess import call
-
-libraries = [
-    "setuptools", "wheel",
-    "matplotlib", "pandas", "numpy",
-    "pymongo[srv]"
-]
-
-call("pip install " + ' '.join(libraries), shell=True)
-call("pip freeze > requirements.txt", shell=True)
+if __name__ == '__main__':
+    load_libraries(libraries=[
+        "setuptools", "wheel",
+        "matplotlib", "pandas", "numpy",
+        "pymongo[srv]"
+    ])
