@@ -3,19 +3,18 @@
 
 import pymongo
 
+# DB CONFIG
+_DB_USER_NAME = "dev"
+_DB_USER_PASSWORD = "Em4SWKrUDatZ83b"
+_DEFAULT_DATABASE = "EnergyConsumption"
+_DB_HOST = f"smartenergycluster.jsanh.mongodb.net/{_DEFAULT_DATABASE}?retryWrites=true&w=majority"
+_CLIENT_URL = f"mongodb+srv://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
+
+print("MongoDB:", _CLIENT_URL)
 
 class _MongoDBRemote:
     def __init__(self, database, collection) -> None:
-        super().__init__()
-
-        # DB CONFIG
-        _DB_USER_NAME = "dev"
-        _DB_USER_PASSWORD = "Em4SWKrUDatZ83b"
-        _DEFAULT_DATABASE = "EnergyConsumption"
-        _DB_HOST = f"smartenergycluster.jsanh.mongodb.net/{_DEFAULT_DATABASE}?retryWrites=true&w=majority"
-        _CLIENT_URL = f"mongodb+srv://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
-        
-        print("MongoDB:", _CLIENT_URL)
+        super().__init__()      
         self.collection = pymongo.MongoClient(_CLIENT_URL)[database][collection]
 
     def find_one(self, query):
