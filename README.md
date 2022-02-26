@@ -6,8 +6,8 @@ Repository to store all residential electrical energy consumption time series th
 
 ### Node-RED
 
-![node-red](https://user-images.githubusercontent.com/23506996/153856318-c167c910-4961-4036-8526-f31dcf6a857d.png)
+![image](https://user-images.githubusercontent.com/23506996/155858253-6545d070-567d-4378-88a1-7d191c7b8850.png)
 
 ### Dashboard
 
-![dashboard](https://user-images.githubusercontent.com/23506996/153856214-adf60851-5122-44d5-8472-4c5c8f024aa6.png)
+![image](https://user-images.githubusercontent.com/23506996/155858287-3e36718b-79c4-421c-a50d-69865db086a5.png)
