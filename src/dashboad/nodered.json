@@ -1,4 +1,5 @@
-[{
+[
+  {
     "id": "c234a5bd34f73dd3",
     "type": "tab",
     "label": "Smart Energy",
@@ -17,39 +18,11 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 440,
-    "y": 120,
+    "x": 400,
+    "y": 140,
     "wires": [
       [
         "93b3a03f36dc2da6"
-      ]
-    ]
-  },
-  {
-    "id": "a18526ea9fb222d6",
-    "type": "inject",
-    "z": "c234a5bd34f73dd3",
-    "name": "",
-    "props": [{
-        "p": "payload"
-      },
-      {
-        "p": "topic",
-        "vt": "str"
-      }
-    ],
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "onceDelay": 0.1,
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "x": 120,
-    "y": 360,
-    "wires": [
-      [
-        "6f5b8f174b5d4c69"
       ]
     ]
   },
@@ -65,8 +38,8 @@
     "winHide": false,
     "oldrc": false,
     "name": "",
-    "x": 310,
-    "y": 360,
+    "x": 270,
+    "y": 400,
     "wires": [
       [],
       [],
@@ -83,8 +56,8 @@
     "createDir": true,
     "overwriteFile": "false",
     "encoding": "none",
-    "x": 610,
-    "y": 40,
+    "x": 570,
+    "y": 60,
     "wires": [
       []
     ]
@@ -100,8 +73,8 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 450,
-    "y": 40,
+    "x": 410,
+    "y": 60,
     "wires": [
       [
         "b54bd36df952598c"
@@ -113,14 +86,14 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "",
-    "func": "user_name = \"Valdenir\";\n\nmsg.collection = user_name + \"_TimeSeries\";\nmsg.limit = 24;//msg.payload;\nmsg.payload = {};\nmsg.sort = {\n    \"date\": -1\n};\n\nreturn msg;",
+    "func": "user_name = \"Valdenir\";\n\nmsg.collection = user_name + \"_TimeSeries\";\nmsg.limit = 24;\nmsg.payload = {};\nmsg.sort = {\n    \"date\": -1\n};\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 300,
-    "y": 180,
+    "x": 260,
+    "y": 200,
     "wires": [
       [
         "ae2e7a8c12a89d6e"
@@ -138,8 +111,8 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 620,
-    "y": 180,
+    "x": 580,
+    "y": 200,
     "wires": [
       [
         "813dc5ebd92d87a3"
@@ -157,8 +130,8 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 620,
-    "y": 240,
+    "x": 580,
+    "y": 260,
     "wires": [
       [
         "5ac0b81a078d26ad"
@@ -170,14 +143,14 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "",
-    "func": "var num_days = 30; //parseInt(msg.payload);\n\nuser_name = \"Valdenir\"\n\nmsg.collection = user_name + \"_TimeSeries\"\nmsg.payload = [\n\n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 10]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n\n    }, {\n        \"$sort\": {\n            \"date\": -1\n        }\n    }, {\n        \"$limit\": num_days\n    }\n]\n\nreturn msg;",
+    "func": "var num_days = 30;\n\nuser_name = \"Valdenir\"\n\nmsg.collection = user_name + \"_TimeSeries\"\nmsg.payload = [\n\n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 10]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n\n    }, {\n        \"$sort\": {\n            \"date\": -1\n        }\n    }, {\n        \"$limit\": num_days\n    }\n]\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 300,
-    "y": 240,
+    "x": 260,
+    "y": 260,
     "wires": [
       [
         "7e38492e6ee9db31"
@@ -197,8 +170,8 @@
     "rap": true,
     "rh": 0,
     "inputs": 0,
-    "x": 130,
-    "y": 80,
+    "x": 90,
+    "y": 100,
     "wires": [
       [
         "7f8b837b1aad4a6c"
@@ -213,8 +186,8 @@
     "property": "payload",
     "action": "",
     "pretty": false,
-    "x": 290,
-    "y": 80,
+    "x": 250,
+    "y": 100,
     "wires": [
       [
         "3c858404b627ec81",
@@ -233,8 +206,8 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 620,
-    "y": 300,
+    "x": 580,
+    "y": 320,
     "wires": [
       [
         "36794e9c483ce141"
@@ -246,14 +219,14 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "",
-    "func": "var num_months = 30; //parseInt(msg.payload);\n\nuser_name = \"Valdenir\"\n\nmsg.collection = user_name + \"_TimeSeries\"\nmsg.payload = [{\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 7]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n    },\n    {\n        \"$sort\": {\n            \"date\": -1\n        }\n    },\n    {\n        \"$limit\": num_months\n    }\n]\n\nreturn msg;",
+    "func": "var num_months = 30; \n\nuser_name = \"Valdenir\"\n\nmsg.collection = user_name + \"_TimeSeries\"\nmsg.payload = [{\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 7]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n    },\n    {\n        \"$sort\": {\n            \"date\": -1\n        }\n    },\n    {\n        \"$limit\": num_months\n    }\n]\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 300,
-    "y": 300,
+    "x": 260,
+    "y": 320,
     "wires": [
       [
         "77c2a51a58094522"
@@ -283,8 +256,8 @@
     "seg1": "1000",
     "seg2": "3000",
     "className": "",
-    "x": 630,
-    "y": 120,
+    "x": 590,
+    "y": 140,
     "wires": []
   },
   {
@@ -325,8 +298,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 850,
-    "y": 240,
+    "x": 810,
+    "y": 260,
     "wires": [
       []
     ]
@@ -369,8 +342,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 850,
-    "y": 180,
+    "x": 810,
+    "y": 200,
     "wires": [
       []
     ]
@@ -413,8 +386,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 860,
-    "y": 300,
+    "x": 820,
+    "y": 320,
     "wires": [
       []
     ]
@@ -427,8 +400,8 @@
     "name": "",
     "collection": "",
     "operation": "find",
-    "x": 460,
-    "y": 180,
+    "x": 420,
+    "y": 200,
     "wires": [
       [
         "de25178d77070328"
@@ -443,8 +416,8 @@
     "name": "",
     "collection": "",
     "operation": "aggregate",
-    "x": 460,
-    "y": 240,
+    "x": 420,
+    "y": 260,
     "wires": [
       [
         "30cbd3f6c077a5bd"
@@ -459,8 +432,8 @@
     "name": "",
     "collection": "",
     "operation": "aggregate",
-    "x": 460,
-    "y": 300,
+    "x": 420,
+    "y": 320,
     "wires": [
       [
         "0fe5966d6583d060"
@@ -487,13 +460,41 @@
     "payloadType": "str",
     "topic": "topic",
     "topicType": "msg",
-    "x": 120,
-    "y": 240,
+    "x": 80,
+    "y": 260,
     "wires": [
       [
         "a628c97fe6d3d8d5",
         "6bec53364ed3021d",
         "86acfe57c34128c1"
+      ]
+    ]
+  },
+  {
+    "id": "9c3ec9c3bdcdb896",
+    "type": "ui_button",
+    "z": "c234a5bd34f73dd3",
+    "name": "",
+    "group": "90c93efcedc1ffc9",
+    "order": 6,
+    "width": 0,
+    "height": 0,
+    "passthru": false,
+    "label": "Reboot",
+    "tooltip": "",
+    "color": "",
+    "bgcolor": "red",
+    "className": "",
+    "icon": "",
+    "payload": "",
+    "payloadType": "str",
+    "topic": "topic",
+    "topicType": "msg",
+    "x": 80,
+    "y": 400,
+    "wires": [
+      [
+        "6f5b8f174b5d4c69"
       ]
     ]
   },
