@@ -1,6 +1,3 @@
-# coding=utf-8
-# !/usr/bin/python3
-
 import pymongo
 
 # DB CONFIG
@@ -12,9 +9,10 @@ _CLIENT_URL = f"mongodb+srv://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
 
 print("MongoDB:", _CLIENT_URL)
 
+
 class _MongoDBRemote:
     def __init__(self, database, collection) -> None:
-        super().__init__()      
+        super().__init__()
         self.collection = pymongo.MongoClient(_CLIENT_URL)[database][collection]
 
     def find_one(self, query):
@@ -45,6 +43,9 @@ class _MongoDBRemote:
 
     def remove(self, query):
         self.collection.remove(query)
+
+    def distinct(self, query):
+        return self.collection.distinct(query)
 
 
 '''
