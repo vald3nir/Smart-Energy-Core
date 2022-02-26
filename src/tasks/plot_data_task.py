@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
 
 from src.database.MongoDB import MongoDB
-from src.tasks import get_time_series_collection_name
 
 
-def plot_consumption_yearly(_user_name, _year):
-    db = MongoDB(collection=get_time_series_collection_name(_user_name))
+def plot_consumption_yearly(device, _year):
+    db = MongoDB(collection="consumption")
 
     date = []
     consumption = []
@@ -14,6 +13,7 @@ def plot_consumption_yearly(_user_name, _year):
     query = [
         {
             "$match": {
+                "device": device,
                 "date": {
                     '$regex': f"{_year}-.*"
                 }
@@ -52,12 +52,13 @@ def plot_consumption_yearly(_user_name, _year):
     plt.show()
 
 
-def plot_consumption_monthly(_user_name, _date):
-    db = MongoDB(collection=get_time_series_collection_name(_user_name))
+def plot_consumption_monthly(device, _date):
+    db = MongoDB(collection="consumption")
 
     query = [
         {
             "$match": {
+                "device": device,
                 "date": {
                     '$regex': f"{_date}-.*"
                 }
@@ -100,14 +101,14 @@ def plot_consumption_monthly(_user_name, _date):
     plt.show()
 
 
-def plot_consumption_daily(_user_name, _date):
-    db = MongoDB(collection=get_time_series_collection_name(_user_name))
+def plot_consumption_daily(device, _date):
+    db = MongoDB(collection="consumption")
 
     dates = []
     consumptions = []
     consumption_total = 0
 
-    for data in db.find_all({"date": {'$regex': f'{_date}.*'}}):
+    for data in db.find_all({"device": device, "date": {'$regex': f'{_date}.*'}}):
         dates.append(data["date"][11:-9])
         consumptions.append(data["consumption_kwh"] * 1000)
         consumption_total += data["consumption_kwh"]
@@ -119,11 +120,12 @@ def plot_consumption_daily(_user_name, _date):
     plt.show()
 
 
-def plot_last_consumption_days(_user_name, num_days=30):
-    db = MongoDB(collection=get_time_series_collection_name(_user_name))
+def plot_last_consumption_days(device, num_days=30):
+    db = MongoDB(collection="consumption")
 
     query = [
         {
+            "$match": {"device": device},
             "$group": {
                 "_id": {
                     "$substr": ["$date", 0, 10]
@@ -167,11 +169,12 @@ def plot_last_consumption_days(_user_name, num_days=30):
     plt.show()
 
 
-def plot_last_consumption_months(_user_name, num_months=30):
-    db = MongoDB(collection=get_time_series_collection_name(_user_name))
+def plot_last_consumption_months(device, num_months=30):
+    db = MongoDB(collection="consumption")
 
     query = [
         {
+            "$match": {"device": device},
             "$group": {
                 "_id": {
                     "$substr": ["$date", 0, 7]
