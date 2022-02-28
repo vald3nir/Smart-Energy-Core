@@ -7,7 +7,8 @@ _DEFAULT_DATABASE = "EnergyConsumption"
 _DB_HOST = f"smartenergycluster.jsanh.mongodb.net/{_DEFAULT_DATABASE}?retryWrites=true&w=majority"
 _CLIENT_URL = f"mongodb+srv://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
 
-print("MongoDB:", _CLIENT_URL)
+
+# print("MongoDB:", _CLIENT_URL)
 
 
 class _MongoDBRemote:

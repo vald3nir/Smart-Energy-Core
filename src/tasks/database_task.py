@@ -1,5 +1,6 @@
 import src.utils.utils_csv as utils_csv
 import src.utils.utils_io as utils_io
+from src.database.Firebase import FirebaseDB
 from src.database.MongoDB import MongoDB
 
 # -------------------------------------------------------------------
@@ -56,6 +57,14 @@ def _restore_consumption():
 # -------------------------------------------------------------------
 # ALL
 # -------------------------------------------------------------------
+
+def export_data_to_firebase():
+    db = FirebaseDB()
+    db.clear()
+    for file_csv in utils_io.list_all_files("src/database/backup/"):
+        if file_csv != USERS_CSV:
+            data_json = utils_csv.file_csv_to_json(file_csv)
+            db.insert(header="consumption", collection=data_json[0]["device"], data=data_json)
 
 
 def backup_collections():
