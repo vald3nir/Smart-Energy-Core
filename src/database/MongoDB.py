@@ -31,10 +31,8 @@ class _MongoDBRemote:
     def aggregate(self, pipeline):
         return self.collection.aggregate(pipeline=pipeline)
 
-    def find_all(self, query=None):
-        if query is None:
-            query = {}
-        return list(self.collection.find(query))
+    def find_all(self, query={}, sort_field='_id'):      
+        return list(self.collection.find(query).sort([(sort_field, pymongo.ASCENDING)]))
 
     def last(self, limit=5):
         return list(self.collection.find().sort([('_id', pymongo.DESCENDING)]).limit(limit))

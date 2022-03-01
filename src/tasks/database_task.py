@@ -37,7 +37,7 @@ def _backup_consumption():
     for device in db.distinct("device"):
         consumption = []
 
-        for data_json in db.find_all({"device": device}):
+        for data_json in db.find_all(query={"device": device}, sort_field="date"):
             data_json.pop("_id")
             consumption.append(data_json)
 
