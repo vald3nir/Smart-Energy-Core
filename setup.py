@@ -13,6 +13,7 @@ if __name__ == '__main__':
     load_libraries(libraries=[
         "setuptools", "wheel",
         "matplotlib", "pandas", "numpy",
-        "pymongo[srv]", "pyrebase4",
+        "pymongo[srv]",
+        "firebase-admin",
         "pillow", "qrcode"
     ])
