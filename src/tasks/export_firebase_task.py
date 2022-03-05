@@ -133,4 +133,6 @@ def export_data_to_firebase():
     print("Exporting to firebase")
     for device in MongoDB("consumption").distinct("device"):
         _export_annual_consumption(device)
+        print(f"device: {device} -> export annual consumption")
         _export_monthly_consumption(device)
+        print(f"device: {device} -> export monthly consumption")
