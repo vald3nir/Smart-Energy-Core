@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "smart-energy-3e7aa",
+  "private_key_id": "5b8f1f0b31fd0ec362b13eab8929030c240c8c73",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCgnKkchWfExeJ0\nUOnJPzmudTxo7jrQ5QTKEWdTRTHifPhxJ9EPgTR/0/6iGJOzxEKQ0MAi8NLbQj/J\nOQG5ZjmcJ5Ge6oL+N1hG2QxB1IjJjzWWo4OW8orWqVFPheCY72c1gD/AEzbp992c\nUxLXNIhYFxSLg/JsmX+ENoXftCdj32sXTF7pl++SXEduY8PaqyNKxWcppaFdiU0H\nEuaZVfWfzAXxGBX2UpiFQXejvJ785AFJ8s5ByTo+Uhu0z2OjoQMz89ryMwoq+AuM\nqVbjms6WoNYtug2f/L20TtZw2SBIfSXnDrOMcVSctxUw2mH72OW0iLEpt+JH/fLr\nhOckmVr1AgMBAAECggEAGbH744pmQmwENuarrbIrSMFhzknFaB5+Uyj7S65SH5wt\nunC2eNFgyaNBZW54JuDwY1m6UNIQHIWZ+IKMcjxWstL+cEWwJPqhaV2Xy+pe40bs\nObLkPmCER3kkKeGkao3r3aUseHllJi5Xqob8iH3Tjar3naXDluNB1tr1ily4lo4V\ndezk7LTDv+Ja/pdQi9n3QIoidb9hTxXou9/GhYERBqgnJxu1pOI3IGRYhOVXTUwg\npOHm9sf4/lTMD2t5Ipkvi+GvVOxiJF6ICGPOAzTyIicbnntX7Uei8VLEooZSQh9E\nb6MgsLHYMs7jI8eb3U7v2Js49AUAXbpp6zNuLxuu6wKBgQDOIDGwn3EEf7emrQRO\n3Eqa5T0VbAjVtSmRQLC6bSC4+/o7IQOhgbTDxOKf+xpJfHYwN3unMxiXQSwUPZ3s\nJZssvwtZroa4xvSAxHyW4JLGhX3CwDwkXR9RVKvFhcR6vwTWAtmuMZgfSR9pkWrg\nwUPSNS3xLtOBjF5qHPjz7Tki+wKBgQDHeUIoSXOYKwD7L6tv2qO7WmbGhr2twb7H\nLbReRJfyZJO+OVRSUs2x2p5b/BNt3Z19pEQJcbUbNPgZ0CtQAm6pQaxbx1tT5j3c\n1rCtZfRnnxlnjTWc55NA7hJt8vr5ZVh1rpNIsOYFc2Nv7uqfx5Usk3F76fbx826M\nPRMPXgWWzwKBgARf/I4CJFTzHQPFolTGKjM1cGF3BIz8pmA13kpmrI4gkwQURE52\nQU7ya9j3bGxo3t1RICfBVuFG+deII0Ty22NMvsHtiWB8oI3nHbnaFGNwS+YJTH19\nGIASav7rQutUCJc+Qj6HQPJRDACinIEeuQDKLipzUvvp7csUyFftDgxnAoGBAKun\niKv8kXH4R87gtcn6v32BjQH4f4/gM1lZ1mZs5skbjhxbX1m8kfAkbrQ/l0SrOlUd\nn8L0y+IO0hX8ktk2Tp5uunD8fHYVo1TAl6eQHiNxwT3gQau1iH2OoeNl/l3Rva7/\nvRUHzdoQ8xgm5Fb9PDzw4O6+ZtjNIGukPxuxUGP3AoGAbNBHZj/k4n4DdHq5P+2E\nswdixkJ1aZnLkUNJ/MUBJ50DpOTXShCF4pX5QDn1GEO2tNHULJDmpD9Q2TovZkeY\nd5vKmLyRrpYmivRBSV5BHsSDWp6X+CqsorZWeR/2Mk7Qo6Lbpie3IquN1YXdwuJr\nkZZFUItCVP+ce4uvzDcW7eQ=\n-----END PRIVATE KEY-----\n",
+  "client_email": "python-dataset@smart-energy-3e7aa.iam.gserviceaccount.com",
+  "client_id": "113680755757757223590",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/python-dataset%40smart-energy-3e7aa.iam.gserviceaccount.com"
+}

@@ -1,6 +1,9 @@
-from pyrebase import pyrebase
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
-firebaseConfig = {
+_path_json_config = 'src\database\smart-energy-3e7aa-5b8f1f0b31fd.json'
+_firebase_config = {
     "apiKey": "AIzaSyCxujiFsfdNZEH8zIxIQwaAXvujQvSFyA4",
     "authDomain": "smart-energy-3e7aa.firebaseapp.com",
     "databaseURL": "https://smart-energy-3e7aa-default-rtdb.firebaseio.com",
@@ -12,14 +15,14 @@ firebaseConfig = {
 }
 
 
-class FirebaseDB:
+class FirebaseClient:
 
     def __init__(self) -> None:
         super().__init__()
-        self.db = pyrebase.initialize_app(firebaseConfig).database()
+        cred = credentials.Certificate(_path_json_config)
+        firebase_admin.initialize_app(cred, _firebase_config)
+        self.firestore = firestore.client()
 
-    def clear(self):
-        self.db.remove()
-
-    def insert(self, header, collection, data):
-        self.db.child(header).child(collection).push(data=data)
+    def insert(self, collection, document, data):
+        doc_ref = self.firestore.collection(collection).document(document)
+        doc_ref.set(data)

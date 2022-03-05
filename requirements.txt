@@ -1,9 +1,7 @@
-setuptools
-wheel
 matplotlib
 pandas
 numpy
 pymongo[srv]
-pyrebase4
+firebase-admin
 pillow
 qrcode
