@@ -2,7 +2,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-_path_json_config = 'src\database\smart-energy-3e7aa-a28437b42ed9.json'
+_path_json_config = 'C:\\src\\keys\\smart-energy-3e7aa-a28437b42ed9.json'
 _firebase_config = {
     "apiKey": "AIzaSyCxujiFsfdNZEH8zIxIQwaAXvujQvSFyA4",
     "authDomain": "smart-energy-3e7aa.firebaseapp.com",
