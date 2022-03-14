@@ -1,13 +1,10 @@
-# Smart Energy Datasets
+# Smart Energy Core
 
-Repository to store all residential electrical energy consumption time series through a dashboard created through Node-red.
+Residential energy consumption processing core with internal dashboard for real-time visualization.
 
 ## Overview
 
-### Node-RED
+### Dashboard [Node-RED]
 
 ![image](https://user-images.githubusercontent.com/23506996/155858253-6545d070-567d-4378-88a1-7d191c7b8850.png)
-
-### Dashboard
-
 ![image](https://user-images.githubusercontent.com/23506996/155858287-3e36718b-79c4-421c-a50d-69865db086a5.png)
