@@ -1,13 +1,5 @@
 [
   {
-    "id": "c234a5bd34f73dd3",
-    "type": "tab",
-    "label": "Smart Energy",
-    "disabled": false,
-    "info": "",
-    "env": []
-  },
-  {
     "id": "5aa687403127f993",
     "type": "function",
     "z": "c234a5bd34f73dd3",
@@ -18,11 +10,12 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 420,
-    "y": 120,
+    "x": 440,
+    "y": 140,
     "wires": [
       [
-        "93b3a03f36dc2da6"
+        "93b3a03f36dc2da6",
+        "36d56ac978e19968"
       ]
     ]
   },
@@ -38,8 +31,8 @@
     "winHide": false,
     "oldrc": false,
     "name": "",
-    "x": 1010,
-    "y": 120,
+    "x": 290,
+    "y": 40,
     "wires": [
       [],
       [],
@@ -57,7 +50,7 @@
     "overwriteFile": "false",
     "encoding": "none",
     "x": 590,
-    "y": 40,
+    "y": 220,
     "wires": [
       []
     ]
@@ -67,14 +60,14 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "repositório",
-    "func": "var topic = msg.topic.split(\"/\").pop()\nvar date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/Smart-Energy-Datasets/src/time_series/\" + topic + \"/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.power;\n\nreturn msg;",
+    "func": "var topic = msg.topic.split(\"/\").pop()\nvar date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/Github/Smart-Energy-Datasets/src/time_series/\" + topic + \"/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.power;\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 430,
-    "y": 40,
+    "x": 450,
+    "y": 220,
     "wires": [
       [
         "b54bd36df952598c"
@@ -94,8 +87,8 @@
     "rap": true,
     "rh": 0,
     "inputs": 0,
-    "x": 90,
-    "y": 80,
+    "x": 130,
+    "y": 180,
     "wires": [
       [
         "7f8b837b1aad4a6c"
@@ -110,8 +103,8 @@
     "property": "payload",
     "action": "",
     "pretty": false,
-    "x": 270,
-    "y": 80,
+    "x": 250,
+    "y": 180,
     "wires": [
       [
         "3c858404b627ec81",
@@ -120,31 +113,187 @@
     ]
   },
   {
-    "id": "93b3a03f36dc2da6",
-    "type": "ui_gauge",
+    "id": "8676a267aa170f82",
+    "type": "function",
     "z": "c234a5bd34f73dd3",
-    "name": "Tempo Real",
-    "group": "90c93efcedc1ffc9",
-    "order": 3,
-    "width": 6,
-    "height": 5,
-    "gtype": "donut",
-    "title": "Tempo Real",
-    "label": "w",
-    "format": "{{value}}",
-    "min": 0,
-    "max": "2000",
-    "colors": [
-      "#00b500",
-      "#e6e600",
-      "#ca3838"
-    ],
-    "seg1": "1000",
-    "seg2": "3000",
-    "className": "",
-    "x": 610,
-    "y": 120,
-    "wires": []
+    "name": "",
+    "func": "// Valdenir\nmsg.payload = \"a32ab0af-970c-11ec-9779-a463a116a9e2\";\n\n// Cris\n// msg.payload = \"31f30d16-9729-11ec-ad33-a463a116a9e2\";\n\n// Aurean\n// msg.payload = \"31f820c2-9729-11ec-882e-a463a116a9e2\";\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 260,
+    "y": 340,
+    "wires": [
+      [
+        "6b6699c8c0b1f1aa",
+        "a79c5df5cdb18d0a",
+        "c30939c241257d8b"
+      ]
+    ]
+  },
+  {
+    "id": "6b6699c8c0b1f1aa",
+    "type": "function",
+    "z": "c234a5bd34f73dd3",
+    "name": "",
+    "func": "var device = msg.payload;\nmsg.collection = \"consumption\";\nmsg.limit = 24;\nmsg.payload = {\n    \"device\": device\n};\nmsg.sort = {\n    \"date\": -1\n};\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 440,
+    "y": 300,
+    "wires": [
+      [
+        "7e90cbb4f6c48455"
+      ]
+    ]
+  },
+  {
+    "id": "f82550345f722258",
+    "type": "function",
+    "z": "c234a5bd34f73dd3",
+    "name": "",
+    "func": "var labels = []\nvar data = [[]]\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(10, 16))\n    data[0].push(item.consumption_kwh * 1000)\n});\n\ndata[0].reverse();\nlabels.reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 760,
+    "y": 300,
+    "wires": [
+      [
+        "fe855bf9cc7403d5"
+      ]
+    ]
+  },
+  {
+    "id": "946014c544b81c6a",
+    "type": "function",
+    "z": "c234a5bd34f73dd3",
+    "name": "",
+    "func": "var labels = []\nvar data = [[]]\n\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(5, 10))\n    data[0].push(item.consumption_kwh)\n});\n\ndata[0].reverse();\nlabels.reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 760,
+    "y": 360,
+    "wires": [
+      [
+        "94cde45947d5dacb"
+      ]
+    ]
+  },
+  {
+    "id": "a79c5df5cdb18d0a",
+    "type": "function",
+    "z": "c234a5bd34f73dd3",
+    "name": "",
+    "func": "var num_days = 30;\nvar device = msg.payload;\n\nmsg.collection = \"consumption\";\nmsg.payload = [\n    {\n        \"$match\": {\n            \"device\": device\n        }\n    },\n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 10]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n\n    }, {\n        \"$sort\": {\n            \"date\": -1\n        }\n    }, {\n        \"$limit\": num_days\n    }\n]\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 440,
+    "y": 360,
+    "wires": [
+      [
+        "34955f00a736a8fc"
+      ]
+    ]
+  },
+  {
+    "id": "e2db3ff9c356841f",
+    "type": "function",
+    "z": "c234a5bd34f73dd3",
+    "name": "",
+    "func": "var labels = []\nvar data = [[]]\n\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(0, 7))\n    data[0].push(item.consumption_kwh)\n});\n\nlabels.reverse();\ndata[0].reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 760,
+    "y": 420,
+    "wires": [
+      [
+        "4d2e618aed79bf60"
+      ]
+    ]
+  },
+  {
+    "id": "c30939c241257d8b",
+    "type": "function",
+    "z": "c234a5bd34f73dd3",
+    "name": "",
+    "func": "var num_months = 30;\nvar device = msg.payload;\n\nmsg.collection = \"consumption\";\nmsg.payload = [\n    {\n        \"$match\": {\n            \"device\": device\n        }\n    }, \n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 7]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n    },\n    {\n        \"$sort\": {\n            \"date\": -1\n        }\n    },\n    {\n        \"$limit\": num_months\n    }\n]\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 440,
+    "y": 420,
+    "wires": [
+      [
+        "12c13ee1548de574"
+      ]
+    ]
+  },
+  {
+    "id": "7e90cbb4f6c48455",
+    "type": "mongodb in",
+    "z": "c234a5bd34f73dd3",
+    "mongodb": "1172ed95d7a8c3d0",
+    "name": "",
+    "collection": "",
+    "operation": "find",
+    "x": 600,
+    "y": 300,
+    "wires": [
+      [
+        "f82550345f722258"
+      ]
+    ]
+  },
+  {
+    "id": "34955f00a736a8fc",
+    "type": "mongodb in",
+    "z": "c234a5bd34f73dd3",
+    "mongodb": "1172ed95d7a8c3d0",
+    "name": "",
+    "collection": "",
+    "operation": "aggregate",
+    "x": 600,
+    "y": 360,
+    "wires": [
+      [
+        "946014c544b81c6a"
+      ]
+    ]
+  },
+  {
+    "id": "12c13ee1548de574",
+    "type": "mongodb in",
+    "z": "c234a5bd34f73dd3",
+    "mongodb": "1172ed95d7a8c3d0",
+    "name": "",
+    "collection": "",
+    "operation": "aggregate",
+    "x": 600,
+    "y": 420,
+    "wires": [
+      [
+        "e2db3ff9c356841f"
+      ]
+    ]
   },
   {
     "id": "1f35fbb8225ac418",
@@ -166,8 +315,8 @@
     "payloadType": "str",
     "topic": "topic",
     "topicType": "msg",
-    "x": 100,
-    "y": 240,
+    "x": 120,
+    "y": 340,
     "wires": [
       [
         "8676a267aa170f82"
@@ -194,8 +343,8 @@
     "payloadType": "str",
     "topic": "topic",
     "topicType": "msg",
-    "x": 840,
-    "y": 120,
+    "x": 120,
+    "y": 40,
     "wires": [
       [
         "6f5b8f174b5d4c69"
@@ -203,139 +352,31 @@
     ]
   },
   {
-    "id": "8676a267aa170f82",
-    "type": "function",
+    "id": "93b3a03f36dc2da6",
+    "type": "ui_gauge",
     "z": "c234a5bd34f73dd3",
-    "name": "",
-    "func": "// Valdenir\nmsg.payload = \"a32ab0af-970c-11ec-9779-a463a116a9e2\";\n\n// Cris\n// msg.payload = \"31f30d16-9729-11ec-ad33-a463a116a9e2\";\n\n// Aurean\n// msg.payload = \"31f820c2-9729-11ec-882e-a463a116a9e2\";\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 240,
-    "y": 240,
-    "wires": [
-      [
-        "6b6699c8c0b1f1aa",
-        "a79c5df5cdb18d0a",
-        "c30939c241257d8b"
-      ]
-    ]
-  },
-  {
-    "id": "6b6699c8c0b1f1aa",
-    "type": "function",
-    "z": "c234a5bd34f73dd3",
-    "name": "",
-    "func": "var device = msg.payload;\nmsg.collection = \"consumption\";\nmsg.limit = 24;\nmsg.payload = {\n    \"device\": device\n};\nmsg.sort = {\n    \"date\": -1\n};\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 420,
-    "y": 200,
-    "wires": [
-      [
-        "7e90cbb4f6c48455"
-      ]
-    ]
-  },
-  {
-    "id": "f82550345f722258",
-    "type": "function",
-    "z": "c234a5bd34f73dd3",
-    "name": "",
-    "func": "var labels = []\nvar data = [[]]\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(10, 16))\n    data[0].push(item.consumption_kwh * 1000)\n});\n\ndata[0].reverse();\nlabels.reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 740,
-    "y": 200,
-    "wires": [
-      [
-        "fe855bf9cc7403d5"
-      ]
-    ]
-  },
-  {
-    "id": "946014c544b81c6a",
-    "type": "function",
-    "z": "c234a5bd34f73dd3",
-    "name": "",
-    "func": "var labels = []\nvar data = [[]]\n\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(5, 10))\n    data[0].push(item.consumption_kwh)\n});\n\ndata[0].reverse();\nlabels.reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 740,
-    "y": 260,
-    "wires": [
-      [
-        "94cde45947d5dacb"
-      ]
-    ]
-  },
-  {
-    "id": "a79c5df5cdb18d0a",
-    "type": "function",
-    "z": "c234a5bd34f73dd3",
-    "name": "",
-    "func": "var num_days = 30;\nvar device = msg.payload;\n\nmsg.collection = \"consumption\";\nmsg.payload = [\n    {\n        \"$match\": {\n            \"device\": device\n        }\n    },\n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 10]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n\n    }, {\n        \"$sort\": {\n            \"date\": -1\n        }\n    }, {\n        \"$limit\": num_days\n    }\n]\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 420,
-    "y": 260,
-    "wires": [
-      [
-        "34955f00a736a8fc"
-      ]
-    ]
-  },
-  {
-    "id": "e2db3ff9c356841f",
-    "type": "function",
-    "z": "c234a5bd34f73dd3",
-    "name": "",
-    "func": "var labels = []\nvar data = [[]]\n\nmsg.payload.forEach(function (item, indice, array) {\n    labels.push(item.date.substring(0, 7))\n    data[0].push(item.consumption_kwh)\n});\n\nlabels.reverse();\ndata[0].reverse();\n\nmsg.payload = [{\n    \"series\": [\"Consumo\"],\n    \"data\": data,\n    \"labels\": labels\n}];\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 740,
-    "y": 320,
-    "wires": [
-      [
-        "4d2e618aed79bf60"
-      ]
-    ]
-  },
-  {
-    "id": "c30939c241257d8b",
-    "type": "function",
-    "z": "c234a5bd34f73dd3",
-    "name": "",
-    "func": "var num_months = 30;\nvar device = msg.payload;\n\nmsg.collection = \"consumption\";\nmsg.payload = [\n    {\n        \"$match\": {\n            \"device\": device\n        }\n    }, \n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 7]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n    },\n    {\n        \"$sort\": {\n            \"date\": -1\n        }\n    },\n    {\n        \"$limit\": num_months\n    }\n]\n\nreturn msg;",
-    "outputs": 1,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 420,
-    "y": 320,
-    "wires": [
-      [
-        "12c13ee1548de574"
-      ]
-    ]
+    "name": "Tempo Real",
+    "group": "90c93efcedc1ffc9",
+    "order": 2,
+    "width": 6,
+    "height": 5,
+    "gtype": "donut",
+    "title": "Tempo Real",
+    "label": "w",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "1800",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "450",
+    "seg2": "1000",
+    "className": "",
+    "x": 610,
+    "y": 120,
+    "wires": []
   },
   {
     "id": "94cde45947d5dacb",
@@ -375,8 +416,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 970,
-    "y": 260,
+    "x": 990,
+    "y": 360,
     "wires": [
       []
     ]
@@ -388,7 +429,7 @@
     "name": "",
     "group": "90c93efcedc1ffc9",
     "order": 4,
-    "width": 18,
+    "width": 24,
     "height": 5,
     "label": "Consumo nas últimas 24 horas [W/h]",
     "chartType": "line",
@@ -419,8 +460,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 970,
-    "y": 200,
+    "x": 990,
+    "y": 300,
     "wires": [
       []
     ]
@@ -463,58 +504,54 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 980,
-    "y": 320,
+    "x": 1000,
+    "y": 420,
     "wires": [
       []
     ]
   },
   {
-    "id": "7e90cbb4f6c48455",
-    "type": "mongodb in",
+    "id": "36d56ac978e19968",
+    "type": "ui_chart",
     "z": "c234a5bd34f73dd3",
-    "mongodb": "1172ed95d7a8c3d0",
     "name": "",
-    "collection": "",
-    "operation": "find",
-    "x": 580,
-    "y": 200,
+    "group": "90c93efcedc1ffc9",
+    "order": 3,
+    "width": 18,
+    "height": 5,
+    "label": "Histórico",
+    "chartType": "line",
+    "legend": "false",
+    "xformat": "HH:mm:ss",
+    "interpolate": "linear",
+    "nodata": "",
+    "dot": false,
+    "ymin": "",
+    "ymax": "",
+    "removeOlder": "999",
+    "removeOlderPoints": "250",
+    "removeOlderUnit": "604800",
+    "cutout": 0,
+    "useOneColor": false,
+    "useUTC": false,
+    "colors": [
+      "#1f77b4",
+      "#aec7e8",
+      "#ff7f0e",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "outputs": 1,
+    "useDifferentColor": false,
+    "className": "",
+    "x": 600,
+    "y": 160,
     "wires": [
-      [
-        "f82550345f722258"
-      ]
-    ]
-  },
-  {
-    "id": "34955f00a736a8fc",
-    "type": "mongodb in",
-    "z": "c234a5bd34f73dd3",
-    "mongodb": "1172ed95d7a8c3d0",
-    "name": "",
-    "collection": "",
-    "operation": "aggregate",
-    "x": 580,
-    "y": 260,
-    "wires": [
-      [
-        "946014c544b81c6a"
-      ]
-    ]
-  },
-  {
-    "id": "12c13ee1548de574",
-    "type": "mongodb in",
-    "z": "c234a5bd34f73dd3",
-    "mongodb": "1172ed95d7a8c3d0",
-    "name": "",
-    "collection": "",
-    "operation": "aggregate",
-    "x": 580,
-    "y": 320,
-    "wires": [
-      [
-        "e2db3ff9c356841f"
-      ]
+      []
     ]
   },
   {
@@ -544,6 +581,16 @@
     "sessionExpiry": ""
   },
   {
+    "id": "1172ed95d7a8c3d0",
+    "type": "mongodb",
+    "hostname": "smartenergycluster.jsanh.mongodb.net",
+    "topology": "dnscluster",
+    "connectOptions": "retryWrites=true&w=majority",
+    "port": "27017",
+    "db": "smart_energy",
+    "name": "SmartEnergyDB"
+  },
+  {
     "id": "90c93efcedc1ffc9",
     "type": "ui_group",
     "name": "Default",
@@ -553,16 +600,6 @@
     "width": "24",
     "collapse": false,
     "className": ""
-  },
-  {
-    "id": "1172ed95d7a8c3d0",
-    "type": "mongodb",
-    "hostname": "smartenergycluster.jsanh.mongodb.net",
-    "topology": "dnscluster",
-    "connectOptions": "retryWrites=true&w=majority",
-    "port": "27017",
-    "db": "smart_energy",
-    "name": "SmartEnergyDB"
   },
   {
     "id": "99caf3c55a3e5f6a",
