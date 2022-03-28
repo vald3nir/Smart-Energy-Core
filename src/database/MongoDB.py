@@ -1,20 +1,20 @@
 import pymongo
 
-# DB CONFIG
 _DB_USER_NAME = "dev"
 _DB_USER_PASSWORD = "Em4SWKrUDatZ83b"
+
+_PROJECT_NAME = 'smart_energy'
 _DEFAULT_DATABASE = "EnergyConsumption"
+
 _DB_HOST = f"smartenergycluster.jsanh.mongodb.net/{_DEFAULT_DATABASE}?retryWrites=true&w=majority"
 _CLIENT_URL = f"mongodb+srv://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
 
-# if __name__ == '__main__':
-#     print("MongoDB:", _CLIENT_URL)
 
-
-class _MongoDBRemote:
-    def __init__(self, database, collection) -> None:
+class MongoDB:
+    def __init__(self, collection) -> None:
         super().__init__()
-        self.collection = pymongo.MongoClient(_CLIENT_URL)[database][collection]
+        self.collection = pymongo.MongoClient(_CLIENT_URL)[_PROJECT_NAME][collection]  # FOR USE REMOTE
+        # self.collection = pymongo.MongoClient()[_PROJECT_NAME][collection]  # FOR USE LOCAL
 
     def find_one(self, query):
         return self.collection.find_one(query)
@@ -45,29 +45,3 @@ class _MongoDBRemote:
 
     def distinct(self, query):
         return self.collection.distinct(query)
-
-
-'''
-To int databse local:
-docker run -v ~/docker --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=dev -e MONGO_INITDB_ROOT_PASSWORD=1721 mongo
-'''
-
-
-class _MongoDBLocal(_MongoDBRemote):
-
-    def __init__(self, database, collection) -> None:
-        super().__init__(database, collection)
-
-        # DB CONFIG
-        _DB_USER_NAME = "dev"
-        _DB_USER_PASSWORD = "1721"
-        _DB_HOST = "127.0.0.1"
-        _CLIENT_URL = f"mongodb://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
-
-        self.collection = pymongo.MongoClient(_CLIENT_URL)[database][collection]
-
-
-# Class used in the project
-class MongoDB(_MongoDBRemote):
-    def __init__(self, collection) -> None:
-        super().__init__('smart_energy', collection)
