@@ -1,5 +1,5 @@
 from src.database.Firebase import FirebaseClient
-from src.database.MongoDB import MongoDB
+from src.tasks import timeseriesDB
 
 firebase = FirebaseClient()
 
@@ -57,7 +57,7 @@ def _export_annual_consumption(device):
             }
         },
     ]
-    for data in MongoDB("consumption").aggregate(pipeline):
+    for data in timeseriesDB.aggregate(pipeline):
         annual_consumption = _fill_annual_consumption(data["description"])
         year = data["_id"]
 
@@ -119,7 +119,7 @@ def _export_monthly_consumption(device):
             }
         },
     ]
-    for data in MongoDB("consumption").aggregate(pipeline):
+    for data in timeseriesDB.aggregate(pipeline):
         year = data["year"]
         month = data["month"]
         firebase.insert(
@@ -131,7 +131,7 @@ def _export_monthly_consumption(device):
 
 def export_data_to_firebase():
     print("Exporting to firebase")
-    for device in MongoDB("consumption").distinct("device"):
+    for device in timeseriesDB.distinct("device"):
         _export_annual_consumption(device)
         print(f"device: {device} -> export annual consumption")
         _export_monthly_consumption(device)

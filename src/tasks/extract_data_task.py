@@ -4,7 +4,7 @@ import src.utils.utils_csv as utils_csv
 import src.utils.utils_date as utils_date
 import src.utils.utils_io as utils_io
 from src.database.MongoDB import MongoDB
-from src.tasks.database_task import backup_collections
+from src.tasks.database_task import backup_timeseries
 
 _WATTS_SECONDS_TO_KILOWATT_HOURS = 2.778 * math.pow(10, -7)
 _TIME_SERIES_FOLDER = "src/time_series"
@@ -126,5 +126,5 @@ def extract_data():
     print("Step 4: check duplicates")
     _check_duplicates()
 
-    print("Step 5: database backup")
-    backup_collections()
+    print("Step 5: backup the time series ")
+    backup_timeseries()
