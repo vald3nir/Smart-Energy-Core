@@ -3,7 +3,7 @@ import math
 import src.utils.utils_csv as utils_csv
 import src.utils.utils_date as utils_date
 import src.utils.utils_io as utils_io
-from src.database.MongoDB import MongoDB
+from src.tasks import timeseriesDB
 from src.tasks.database_task import backup_timeseries
 
 _WATTS_SECONDS_TO_KILOWATT_HOURS = 2.778 * math.pow(10, -7)
@@ -79,16 +79,14 @@ def _reduce_time_series(device):
     if len(dates) > 0:
         dataframe = utils_csv.create_csv({'date': dates, 'device': device, 'consumption_kwh': consumptions})
         data_json = utils_csv.dataframe_to_json(dataframe)
-        db = MongoDB(collection="consumption")
-        db.insert_many(data_json)
+        timeseriesDB.insert_many(data_json)
 
 
 def _check_duplicates():
-    db = MongoDB(collection="consumption")
     set_data_consumption = {}
     list_data_consumption = []
 
-    for data_json in db.find_all({}):
+    for data_json in timeseriesDB.find_all({}):
         data_json.pop("_id")
 
         if data_json["date"] in set_data_consumption:
@@ -101,8 +99,8 @@ def _check_duplicates():
     for key in set_data_consumption:
         list_data_consumption.append(set_data_consumption[key])
 
-    db.clear()
-    db.insert_many(list_data_consumption)
+    timeseriesDB.clear()
+    timeseriesDB.insert_many(list_data_consumption)
 
 
 def extract_data():
