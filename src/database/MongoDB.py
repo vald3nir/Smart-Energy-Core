@@ -9,6 +9,9 @@ _DEFAULT_DATABASE = "EnergyConsumption"
 _DB_HOST = f"smartenergycluster.jsanh.mongodb.net/{_DEFAULT_DATABASE}?retryWrites=true&w=majority"
 _CLIENT_URL = f"mongodb+srv://{_DB_USER_NAME}:{_DB_USER_PASSWORD}@{_DB_HOST}"
 
+# if __name__ == '__main__':
+#     print(_CLIENT_URL)
+
 
 class MongoDB:
     def __init__(self, collection) -> None:
