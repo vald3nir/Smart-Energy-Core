@@ -10,8 +10,8 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 440,
-    "y": 140,
+    "x": 400,
+    "y": 60,
     "wires": [
       [
         "93b3a03f36dc2da6",
@@ -31,8 +31,8 @@
     "winHide": false,
     "oldrc": false,
     "name": "",
-    "x": 290,
-    "y": 40,
+    "x": 910,
+    "y": 100,
     "wires": [
       [],
       [],
@@ -49,8 +49,8 @@
     "createDir": true,
     "overwriteFile": "false",
     "encoding": "none",
-    "x": 590,
-    "y": 220,
+    "x": 550,
+    "y": 140,
     "wires": [
       []
     ]
@@ -60,14 +60,14 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "repositório",
-    "func": "var topic = msg.topic.split(\"/\").pop()\nvar date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/Github/Smart-Energy-Datasets/src/time_series/\" + topic + \"/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.power;\n\nreturn msg;",
+    "func": "var topic = msg.topic.split(\"/\").pop()\nvar date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/Documents/time_series/\" + topic + \"/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.power;\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 450,
-    "y": 220,
+    "x": 410,
+    "y": 140,
     "wires": [
       [
         "b54bd36df952598c"
@@ -87,8 +87,8 @@
     "rap": true,
     "rh": 0,
     "inputs": 0,
-    "x": 130,
-    "y": 180,
+    "x": 90,
+    "y": 100,
     "wires": [
       [
         "7f8b837b1aad4a6c"
@@ -103,8 +103,8 @@
     "property": "payload",
     "action": "",
     "pretty": false,
-    "x": 250,
-    "y": 180,
+    "x": 230,
+    "y": 100,
     "wires": [
       [
         "3c858404b627ec81",
@@ -117,19 +117,19 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "",
-    "func": "// Valdenir\nmsg.payload = \"a32ab0af-970c-11ec-9779-a463a116a9e2\";\n\n// Cris\n// msg.payload = \"31f30d16-9729-11ec-ad33-a463a116a9e2\";\n\n// Aurean\n// msg.payload = \"31f820c2-9729-11ec-882e-a463a116a9e2\";\n\nreturn msg;",
+    "func": "// Valdenir\nmsg.device = \"a32ab0af-970c-11ec-9779-a463a116a9e2\";\n\n// Cris\n// msg.device = \"31f30d16-9729-11ec-ad33-a463a116a9e2\";\n\n// Aurean\n// msg.payload = \"31f820c2-9729-11ec-882e-a463a116a9e2\";\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 260,
-    "y": 340,
+    "x": 240,
+    "y": 280,
     "wires": [
       [
-        "6b6699c8c0b1f1aa",
         "a79c5df5cdb18d0a",
-        "c30939c241257d8b"
+        "c30939c241257d8b",
+        "6b6699c8c0b1f1aa"
       ]
     ]
   },
@@ -138,14 +138,14 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "",
-    "func": "var device = msg.payload;\nmsg.collection = \"consumption\";\nmsg.limit = 24;\nmsg.payload = {\n    \"device\": device\n};\nmsg.sort = {\n    \"date\": -1\n};\n\nreturn msg;",
+    "func": "var device = msg.device;\nmsg.collection = \"timeseries\";\nmsg.limit = 24;\nmsg.payload = {\n    \"device\": device\n};\nmsg.sort = {\n    \"date\": -1\n};\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 440,
-    "y": 300,
+    "x": 400,
+    "y": 220,
     "wires": [
       [
         "7e90cbb4f6c48455"
@@ -163,8 +163,8 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 760,
-    "y": 300,
+    "x": 720,
+    "y": 220,
     "wires": [
       [
         "fe855bf9cc7403d5"
@@ -182,8 +182,8 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 760,
-    "y": 360,
+    "x": 720,
+    "y": 280,
     "wires": [
       [
         "94cde45947d5dacb"
@@ -195,14 +195,14 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "",
-    "func": "var num_days = 30;\nvar device = msg.payload;\n\nmsg.collection = \"consumption\";\nmsg.payload = [\n    {\n        \"$match\": {\n            \"device\": device\n        }\n    },\n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 10]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n\n    }, {\n        \"$sort\": {\n            \"date\": -1\n        }\n    }, {\n        \"$limit\": num_days\n    }\n]\n\nreturn msg;",
+    "func": "var num_days = 30;\nvar device = msg.device;\n\nmsg.collection = \"timeseries\";\nmsg.payload = [\n    {\n        \"$match\": {\n            \"device\": device\n        }\n    },\n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 10]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n\n    }, {\n        \"$sort\": {\n            \"date\": -1\n        }\n    }, {\n        \"$limit\": num_days\n    }\n]\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 440,
-    "y": 360,
+    "x": 400,
+    "y": 280,
     "wires": [
       [
         "34955f00a736a8fc"
@@ -220,8 +220,8 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 760,
-    "y": 420,
+    "x": 720,
+    "y": 340,
     "wires": [
       [
         "4d2e618aed79bf60"
@@ -233,14 +233,14 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "",
-    "func": "var num_months = 30;\nvar device = msg.payload;\n\nmsg.collection = \"consumption\";\nmsg.payload = [\n    {\n        \"$match\": {\n            \"device\": device\n        }\n    }, \n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 7]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n    },\n    {\n        \"$sort\": {\n            \"date\": -1\n        }\n    },\n    {\n        \"$limit\": num_months\n    }\n]\n\nreturn msg;",
+    "func": "var num_months = 30;\nvar device = msg.device;\n\nmsg.collection = \"timeseries\";\nmsg.payload = [\n    {\n        \"$match\": {\n            \"device\": device\n        }\n    }, \n    {\n        \"$group\": {\n            \"_id\": {\n                \"$substr\": [\"$date\", 0, 7]\n            },\n            \"date\": {\n                \"$first\": \"$date\"\n            },\n            \"consumption_kwh\": {\n                \"$sum\": \"$consumption_kwh\"\n            },\n        }\n    },\n    {\n        \"$sort\": {\n            \"date\": -1\n        }\n    },\n    {\n        \"$limit\": num_months\n    }\n]\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 440,
-    "y": 420,
+    "x": 400,
+    "y": 340,
     "wires": [
       [
         "12c13ee1548de574"
@@ -255,8 +255,8 @@
     "name": "",
     "collection": "",
     "operation": "find",
-    "x": 600,
-    "y": 300,
+    "x": 560,
+    "y": 220,
     "wires": [
       [
         "f82550345f722258"
@@ -271,8 +271,8 @@
     "name": "",
     "collection": "",
     "operation": "aggregate",
-    "x": 600,
-    "y": 360,
+    "x": 560,
+    "y": 280,
     "wires": [
       [
         "946014c544b81c6a"
@@ -287,8 +287,8 @@
     "name": "",
     "collection": "",
     "operation": "aggregate",
-    "x": 600,
-    "y": 420,
+    "x": 560,
+    "y": 340,
     "wires": [
       [
         "e2db3ff9c356841f"
@@ -315,8 +315,8 @@
     "payloadType": "str",
     "topic": "topic",
     "topicType": "msg",
-    "x": 120,
-    "y": 340,
+    "x": 100,
+    "y": 280,
     "wires": [
       [
         "8676a267aa170f82"
@@ -329,7 +329,7 @@
     "z": "c234a5bd34f73dd3",
     "name": "",
     "group": "90c93efcedc1ffc9",
-    "order": 7,
+    "order": 8,
     "width": 0,
     "height": 0,
     "passthru": false,
@@ -343,8 +343,8 @@
     "payloadType": "str",
     "topic": "topic",
     "topicType": "msg",
-    "x": 120,
-    "y": 40,
+    "x": 740,
+    "y": 100,
     "wires": [
       [
         "6f5b8f174b5d4c69"
@@ -374,8 +374,8 @@
     "seg1": "450",
     "seg2": "1000",
     "className": "",
-    "x": 610,
-    "y": 120,
+    "x": 570,
+    "y": 40,
     "wires": []
   },
   {
@@ -384,7 +384,7 @@
     "z": "c234a5bd34f73dd3",
     "name": "",
     "group": "90c93efcedc1ffc9",
-    "order": 5,
+    "order": 6,
     "width": 24,
     "height": 5,
     "label": "Consumo nos últimos 30 dias [KW/h]",
@@ -416,8 +416,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 990,
-    "y": 360,
+    "x": 950,
+    "y": 280,
     "wires": [
       []
     ]
@@ -428,7 +428,7 @@
     "z": "c234a5bd34f73dd3",
     "name": "",
     "group": "90c93efcedc1ffc9",
-    "order": 4,
+    "order": 5,
     "width": 24,
     "height": 5,
     "label": "Consumo nas últimas 24 horas [W/h]",
@@ -460,8 +460,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 990,
-    "y": 300,
+    "x": 950,
+    "y": 220,
     "wires": [
       []
     ]
@@ -472,7 +472,7 @@
     "z": "c234a5bd34f73dd3",
     "name": "",
     "group": "90c93efcedc1ffc9",
-    "order": 6,
+    "order": 7,
     "width": 24,
     "height": 5,
     "label": "Consumo nos últimos 30 meses [KW/h]",
@@ -504,8 +504,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 1000,
-    "y": 420,
+    "x": 960,
+    "y": 340,
     "wires": [
       []
     ]
@@ -548,8 +548,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 600,
-    "y": 160,
+    "x": 560,
+    "y": 80,
     "wires": [
       []
     ]
