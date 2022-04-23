@@ -48,3 +48,7 @@ def _restore_timeseries():
 def restore_collections():
     _restore_users()
     _restore_timeseries()
+
+
+# if __name__ == '__main__':
+#     restore_collections()
