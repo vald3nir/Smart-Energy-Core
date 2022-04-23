@@ -16,3 +16,7 @@ def create_device_qrcode(user):
 def create_new_user_with_device(users):
     for user in users:
         print({"user": user, "device": create_device_qrcode(user)})
+
+
+# if __name__ == '__main__':
+#     create_new_user_with_device(["new_user"])
