@@ -132,3 +132,4 @@ dmypy.json
 
 # Project cache
 /cache/
+time_series
