@@ -1,4 +1,4 @@
-from src.constants import USERS_CSV
+from src.data.daos import USERS_CSV
 from src.data.database.MongoDB import MongoDB
 from src.domain.utils import utils_csv
 

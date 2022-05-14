@@ -1,4 +1,4 @@
-from src.constants import TIME_SERIES_CSV
+from src.data.daos import TIME_SERIES_CSV
 from src.data.database.MongoDB import MongoDB
 from src.domain.utils import utils_csv
 
