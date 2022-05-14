@@ -1,6 +1,6 @@
 from subprocess import call
 
-import src.utils.utils_io as utils_io
+import src.domain.utils.utils_io as utils_io
 
 
 def install_libraries():
