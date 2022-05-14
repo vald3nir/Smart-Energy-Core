@@ -1,15 +1,16 @@
 import math
 
-import src.utils.utils_csv as utils_csv
-import src.utils.utils_date as utils_date
-import src.utils.utils_io as utils_io
-from src.tasks import timeseriesDB
-from src.tasks.database_task import backup_timeseries
+import src.domain.utils.utils_csv as utils_csv
+import src.domain.utils.utils_date as utils_date
+import src.domain.utils.utils_io as utils_io
+from src.data.daos.time_series_dao import TimeSeriesDAO
 
 _WATTS_SECONDS_TO_KILOWATT_HOURS = 2.778 * math.pow(10, -7)
 _TIME_SERIES_FOLDER = "src/time_series"
 _HEADER = "created_at,power\n"
 _CUTTING_POWER = 10000
+
+timeseriesDB = TimeSeriesDAO()
 
 
 def _caching_time_series(device):
@@ -125,4 +126,4 @@ def extract_data():
     _check_duplicates()
 
     print("Step 5: backup the time series ")
-    backup_timeseries()
+    # backup_timeseries()
