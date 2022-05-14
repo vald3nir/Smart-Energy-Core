@@ -70,5 +70,9 @@ def delete_file(file_path):
     os.remove(file_path)
 
 
+def move_folder(folder_path, new_path):
+    move_file(folder_path, new_path)
+
+
 def move_file(file_path, new_path):
     shutil.move(file_path, new_path)
