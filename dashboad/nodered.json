@@ -60,7 +60,7 @@
     "type": "function",
     "z": "c234a5bd34f73dd3",
     "name": "repositório",
-    "func": "var topic = msg.topic.split(\"/\").pop()\nvar date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/Documents/time_series/\" + topic + \"/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.power;\n\nreturn msg;",
+    "func": "var topic = msg.topic.split(\"/\").pop()\nvar date = new Date().toISOString();\n\nvar year = date.slice(0, 4)\nvar month = date.slice(5, 7)\nvar fulldate = date.slice(0, 10)\n\nmsg.filename = \"/home/pi/time_series/\" + topic + \"/\" + fulldate + \".csv\";\nmsg.payload = date.toString() + \",\" + msg.payload.power;\n\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
