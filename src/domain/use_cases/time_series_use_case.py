@@ -9,7 +9,7 @@ from src.data.daos.time_series_dao import TimeSeriesDAO
 # ======================================================================================================================
 
 def _caching_time_series():
-    origin_folder = "P://Documents//time_series"
+    origin_folder = "P://time_series"
     for device_name in utils_io.list_sub_folders(origin_folder):
         print(f"device: {device_name}")
 
