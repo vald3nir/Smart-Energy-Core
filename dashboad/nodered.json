@@ -542,7 +542,7 @@
     "type": "function",
     "z": "3417cccc87696561",
     "name": "",
-    "func": "msg.payload = new Date();\nreturn msg;",
+    "func": "var d = new Date();\nd.setDate(d.getDate() - 1);\nmsg.payload = d;\nreturn msg;",
     "outputs": 1,
     "noerr": 0,
     "initialize": "",
