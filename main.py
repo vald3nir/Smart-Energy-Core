@@ -18,5 +18,5 @@ if __name__ == '__main__':
     # restore_db()
     time_series_use_case.extract_data()
     database_use_case.backup_db()
-    database_use_case.export_time_series_to_firebase()
+    # database_use_case.export_time_series_to_firebase()
     print("Finish!")
