@@ -3,5 +3,6 @@ pandas
 numpy
 pymongo[srv]
 firebase-admin
+paho-mqtt
 pillow
 qrcode

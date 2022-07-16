@@ -3,7 +3,7 @@ import math
 import src.domain.utils.utils_csv as utils_csv
 import src.domain.utils.utils_date as utils_date
 import src.domain.utils.utils_io as utils_io
-from src.data.daos.time_series_dao import TimeSeriesDAO
+from src.data.repository.database.daos.time_series_dao import TimeSeriesDAO
 
 
 # ======================================================================================================================

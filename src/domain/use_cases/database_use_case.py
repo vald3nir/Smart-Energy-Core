@@ -1,6 +1,6 @@
-from src.data.daos.time_series_dao import TimeSeriesDAO
-from src.data.daos.users_dao import UsersDAO
-from src.data.database.Firebase import FirebaseClient
+from src.data.repository.database.daos.time_series_dao import TimeSeriesDAO
+from src.data.repository.database.daos.users_dao import UsersDAO
+from src.data.repository.database import FirebaseClient
 
 userDB = UsersDAO()
 timeseriesDB = TimeSeriesDAO()

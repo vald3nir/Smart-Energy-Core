@@ -1,5 +1,5 @@
-from src.data.daos import TIME_SERIES_CSV
-from src.data.database.MongoDB import MongoDB
+from src.data.repository.database.daos import TIME_SERIES_CSV
+from src.data.repository.database.MongoDB import MongoDB
 from src.domain.utils import utils_csv
 
 
