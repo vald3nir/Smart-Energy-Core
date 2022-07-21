@@ -4,7 +4,15 @@ import src.domain.utils.utils_io as utils_io
 
 # -----------------------------------------------------------------------------
 # Application Settings
+
 # -----------------------------------------------------------------------------
+# MQTT Protocol Setup
+
+BROKEN_MQTT = "broker.hivemq.com"
+BROKEN_MQTT_PORT = 1883
+
+# -----------------------------------------------------------------------------
+# Firebase setup
 
 FIREBASE_CERTIFICATE = {
     "type": "service_account",

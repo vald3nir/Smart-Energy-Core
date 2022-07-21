@@ -10,8 +10,7 @@ def create_device_code(users_name=None):
         print({"user": user_name, "device code": devices_use_case.create_device_qrcode(user_name)})
 
 
-def restore_db():
-    database_use_case.restore_db()
+
 
 
 if __name__ == '__main__':
